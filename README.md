@@ -43,6 +43,7 @@ To add or find a prompt, look inside the category folder that fits it. New categ
 
 | Category | Description | Prompts |
 | --- | --- | --- |
+| [Automation](automation) | Prompts for deterministic and externally verified automation | [Deterministic social publication](automation/deterministic-social-publication.md) — publish through official APIs with durable idempotency and readback |
 | [Socials](socials) | Prompts for social and video content | [Audiogram](socials/audiogram.md) — build a 1:1 audiogram in Remotion |
 
 _More categories will be added over time._
