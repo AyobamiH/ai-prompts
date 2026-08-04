@@ -2,165 +2,140 @@
 
 A production prompt for building an evidence-bound execution system in which consequential agent actions require transaction-specific approval, execute exactly once, are independently verified and produce offline-verifiable signed receipts.
 
-This prompt is based on a working TypeScript implementation that protects one bounded repository-patch action. It deliberately starts with one action instead of pretending to secure every tool call at once.
+This prompt is based on a working TypeScript implementation that protects one bounded repository-patch action. It starts with one action deliberately rather than claiming to secure arbitrary tool calls.
 
 ## Requirements
 
-- Node.js 22.5 or newer with ESM and TypeScript strict mode.
+- Node.js 22.5 or newer with ESM and strict TypeScript.
 - Git and a local filesystem.
 - Durable SQL storage such as SQLite or PostgreSQL.
-- Separate key material for approval authority and receipt signing.
-- Ed25519 and SHA-256 support.
-- A disposable Git repository for the end-to-end test.
-- A process-spawning API so mutation, signing and verification can be kept outside the proposer process.
+- Separate Ed25519 keys for approval authority and receipt signing.
+- SHA-256 support.
+- A disposable Git repository for the end-to-end demonstration.
+- A child-process API so mutation can be isolated from proposal, approval and signing.
 
-No hosted service, graph framework or external cryptography package is required. Prefer Node's standard cryptography primitives and the repository's existing SQL layer.
+No graph framework, hosted authority or external cryptography package is required. Prefer Node's standard cryptography primitives and the repository's existing SQL layer.
 
 ## Prompt: build independently verifiable receipts for agent actions
 
-Paste everything below the line into an AI coding assistant. Replace bracketed repository names and paths where required, but keep the trust boundaries, canonicalisation rules and failure semantics unchanged.
+Paste everything below the line into an AI coding assistant. Replace bracketed names where the repository requires them, but keep the trust boundaries, canonicalisation rules and failure semantics unchanged.
 
 ---
 
 Build a production-grade signed receipt system for consequential agent actions.
 
-The first supported action must be a bounded repository patch named:
+Protect one action first:
 
 ```text
 agentproof.repository_patch.v1
 ```
 
-Do not begin by building a generic framework that claims to secure arbitrary tools. Complete and verify this one action end to end, then expose extension points for future actions.
+It must prepare an exact allowlisted patch against a clean local Git repository, bind approval to that prepared state, execute through a separate process, independently verify repository state, recover deterministically and emit a signed Receipt V2.
 
-## Objective
+Do not begin with a generic tool framework. Complete and verify this action end to end, then expose extension points.
 
-A proposer should be able to describe an intended repository change, prepare an exact bounded transaction, obtain approval for that exact prepared state, execute it once, independently observe the resulting repository state and receive a signed receipt that an offline verifier can validate without trusting the executor.
+## Terminal objective
 
-The terminal result must prove:
+The implementation must prove:
 
-1. the exact approved transaction was the transaction executed;
-2. the action was claimed exactly once;
-3. retries cannot cause a second mutation;
-4. verification observed the resulting state independently of the executor's success claim;
-5. the signed receipt binds the authority, transaction, correlation, policy, evidence and outcome;
-6. a cryptographically valid receipt is not automatically trusted;
-7. recovery can reconcile a crash after mutation without inventing success;
-8. compensation creates an authenticated successor receipt rather than rewriting history.
+1. the exact approved transaction was executed;
+2. one idempotency key causes at most one repository mutation;
+3. an identical retry returns the original signed receipt;
+4. verification re-observes state instead of trusting an executor success claim;
+5. the receipt binds authority, transaction, correlation, policy, evidence and outcome;
+6. signature validity and signer trust are evaluated separately;
+7. interrupted execution is reconciled from observed state;
+8. compensation creates a linked successor receipt and never rewrites history.
 
-## Trust roles
+## Five trust roles
 
-Keep these five roles distinct in both code and data:
+Keep these roles distinct in code and data.
 
-1. **Proposer**
-   - Describes intent.
-   - Selects the requested action.
-   - Prepares a bounded transaction.
-   - Cannot approve the transaction.
-   - Cannot sign the receipt.
+### Proposer
 
-2. **Approval authority**
-   - Approves or rejects one exact prepared request.
-   - Binds the decision to the request digest, transaction ID, correlation ID, authority environment, issuer, expiry and nonce.
-   - Cannot mutate the repository through the executor interface.
-   - Uses separate key material from the receipt signer.
+- Describes intent and acceptance criteria.
+- Prepares a bounded transaction.
+- Cannot approve it.
+- Cannot sign its receipt.
 
-3. **Executor**
-   - Applies only a valid, unexpired and previously unused approval.
-   - Runs in a separate process from the proposer.
-   - Cannot mint approval decisions.
-   - Cannot possess the receipt-signing private key.
+### Approval authority
 
-4. **Receipt signer**
-   - Signs independently assembled verified evidence through an injected signing provider.
-   - Does not perform the repository mutation.
-   - Must not accept an executor-authored success statement as sufficient evidence.
+- Approves or rejects one exact prepared request.
+- Binds the decision to request digest, transaction ID, correlation ID, authority environment, issuer, expiry and nonce.
+- Uses different key material from the receipt signer.
+- Cannot mutate through the executor interface.
 
-5. **Offline verifier**
-   - Reconstructs the canonical signature input.
-   - Recomputes all digests.
-   - Verifies Ed25519.
-   - Applies a separately supplied signer fingerprint and authority policy.
-   - Returns identities only from the signed payload.
-   - Does not trust the executor, transport envelope or embedded key by default.
+### Executor
 
-Do not collapse these roles merely because a development build runs them under one operating-system account. Process separation is a capability boundary, not an OS sandbox.
+- Accepts only a valid, unexpired, unused approval.
+- Applies only the prepared bounded mutation.
+- Runs separately from the proposer.
+- Has neither approval nor receipt-signing private keys.
+
+### Receipt signer
+
+- Signs independently assembled verified evidence through an injected signing provider.
+- Does not perform the mutation.
+- Cannot sign an executor's unverified claim as success.
+
+### Offline verifier
+
+- Reconstructs canonical signature bytes.
+- Recomputes digests and verifies Ed25519.
+- Applies a caller-supplied trusted fingerprint and authority policy.
+- Returns identities only from the signed payload.
+- Does not trust the executor, transport envelope or embedded public key by default.
+
+A development build may run processes under one OS account. Document that this is capability separation, not an operating-system sandbox.
 
 ## Package shape
 
-Create a small ESM TypeScript package with:
+Create a small ESM TypeScript package with modules for:
 
 ```text
-src/
-  actions/
-    repository-patch/
-      prepare.ts
-      execute.ts
-      verify.ts
-      compensate.ts
-      types.ts
-  approval/
-    request.ts
-    decision.ts
-    verify.ts
-  canonical/
-    canonical-json.ts
-    digest.ts
-  cli/
-    agentproof.ts
-    development-authority.ts
-  crypto/
-    ed25519.ts
-    fingerprint.ts
-    signing-provider.ts
-  execution/
-    claim.ts
-    reconcile.ts
-    state-machine.ts
-  receipts/
-    assemble.ts
-    sign.ts
-    verify.ts
-    types.ts
-  storage/
-    migrations/
-    store.ts
-  index.ts
-docs/
-  trust-model.md
-  signed-receipt-v2.md
-  repository-patch-v1.md
-test/
-  unit/
-  integration/
-  adversarial/
+actions/repository-patch
+approval
+canonical-json
+crypto
+execution-and-reconciliation
+receipts
+storage
+cli
 ```
 
-Use strict TypeScript. Do not use `any`. Package imports must not perform network calls, scan environment variables, discover repositories, start services or create background timers.
+Also provide:
 
-Every operation must receive an explicit absolute state directory and explicit repository root.
+```text
+docs/trust-model.md
+docs/signed-receipt-v2.md
+docs/repository-patch-v1.md
+test/unit
+test/integration
+test/adversarial
+```
 
-## Protected action
+Use strict TypeScript and no `any`.
 
-The first action is an exact allowlisted patch against a local Git repository.
+Package imports must not:
 
-Support operations:
+- make network calls;
+- inspect environment variables;
+- discover repositories;
+- create files;
+- start services;
+- start background timers.
+
+Every operation receives an explicit absolute state directory and repository root.
+
+## Repository-patch request
+
+Support only:
 
 ```ts
 type RepositoryPatchOperation =
-  | {
-      kind: "write";
-      path: string;
-      contentBase64: string;
-    }
-  | {
-      kind: "delete";
-      path: string;
-    };
-```
+  | { kind: "write"; path: string; contentBase64: string }
+  | { kind: "delete"; path: string };
 
-The action request must include:
-
-```ts
 interface RepositoryPatchRequest {
   schema: "agentproof.protocol.repository-patch-request";
   schemaVersion: "1.0.0";
@@ -187,7 +162,7 @@ interface RepositoryPatchRequest {
 }
 ```
 
-For the reproducible example use:
+For the reproducible demonstration use:
 
 ```text
 maxPatchBytes = 1024
@@ -196,102 +171,69 @@ allowedTrackedPaths = ["protected.txt"]
 allowedNewPaths = []
 ```
 
-The preparer must reject:
+The action must not commit, push, tag, deploy or mutate remotes.
 
-- a non-absolute repository root or state directory;
-- a repository root outside the allowed root;
-- a dirty working tree;
-- a detached HEAD;
-- symlinks in any protected path;
+## Preparation
+
+Preparation is read-only.
+
+Reject:
+
+- non-absolute roots;
+- a repository outside the allowed root;
+- dirty worktrees;
+- detached HEAD;
+- symlinks;
 - submodules;
-- path traversal;
-- absolute patch paths;
+- path traversal or absolute operation paths;
 - `.git` writes;
-- undeclared tracked or new paths;
-- files exceeding the approved count or byte budget;
-- secret-bearing paths or obvious secret material;
-- duplicated operations for the same path;
-- unsupported operation kinds;
+- undeclared tracked or new files;
+- duplicate operations for one path;
 - malformed Base64;
-- a repository whose before-state changes while preparation is occurring.
+- unsupported operations;
+- byte or file-count overflow;
+- secret-bearing paths or obvious secret content;
+- before-state changes during preparation.
 
-Do not commit, push, tag, deploy or change remotes.
+Create an immutable prepared transaction containing:
 
-## Prepared transaction
-
-Preparation must be read-only.
-
-Create an immutable prepared transaction containing at least:
-
-```ts
-interface PreparedTransaction {
-  schema: "agentproof.protocol.prepared-transaction";
-  schemaVersion: "1.0.0";
-  actionType: "agentproof.repository_patch.v1";
-  transactionId: string;
-  correlationId: string;
-  stateDirectory: string;
-  preparedAt: string;
-  repository: {
-    root: string;
-    headSha: string;
-    branch: string;
-    remotesDigest: string;
-    beforeManifestDigest: string;
-    clean: true;
-  };
-  intent: RepositoryPatchRequest["intent"];
-  policy: RepositoryPatchRequest["policy"];
-  operations: Array<
-    RepositoryPatchOperation & {
-      beforeDigest: string | null;
-      afterDigest: string | null;
-      byteLength: number;
-    }
-  >;
-  requestDigest: string;
-}
-```
-
-Generate `transactionId` independently from `correlationId`.
-
-The request digest must cover the complete canonical prepared transaction except the digest field itself. It must bind:
-
-- transaction ID;
-- correlation ID;
+- independent transaction ID and correlation ID;
 - action type;
-- repository identity;
-- before-state;
+- explicit state directory;
+- repository root, branch and HEAD;
+- remote configuration digest;
+- complete before-manifest digest;
 - exact operations;
-- intent;
-- acceptance criteria;
+- before and expected-after digests per path;
+- intent and acceptance criteria;
 - policy;
-- preparation timestamp.
+- preparation timestamp;
+- request digest.
 
-Do not treat a human-readable summary as the approval target.
+The request digest covers the complete canonical prepared transaction except the digest field itself.
+
+Approval targets that digest, not a summary.
 
 ## Canonical JSON
 
-Implement one canonical JSON function and use it for every signed or digested object.
+Use one canonical JSON function for all signing and hashing.
 
-Rules:
+It must:
 
 - recursively sort object keys by Unicode code-unit order;
-- preserve array order;
-- preserve JSON string code points;
+- preserve array order and JSON string code points;
 - preserve `null`;
 - normalise negative zero to zero;
-- reject `NaN`, positive infinity and negative infinity;
-- reject `undefined`, functions, symbols and bigint values;
-- reject non-plain objects;
-- reject cyclic values;
-- reject duplicate object keys while parsing CLI JSON.
+- reject non-finite numbers;
+- reject `undefined`, functions, symbols and bigint;
+- reject non-plain objects and cycles;
+- reject duplicate keys while parsing CLI JSON.
 
-Do not rely on ordinary `JSON.stringify` insertion order as a security boundary.
+Do not rely on ordinary object insertion order as a security boundary.
 
-## Approval request
+## Approval protocol
 
-Create an approval request from the prepared transaction:
+Create a deterministic approval request containing:
 
 ```ts
 interface ApprovalRequest {
@@ -308,32 +250,21 @@ interface ApprovalRequest {
 }
 ```
 
-The approval request must be deterministic for the same prepared transaction, expiry and nonce.
+The development demonstration uses a ten-minute expiry.
 
-The development quickstart should use a ten-minute expiry.
+The authority signs a payload containing:
 
-## Approval decision
+- decision: `approved` or `rejected`;
+- action type;
+- transaction ID;
+- correlation ID;
+- request digest;
+- authority environment;
+- issuer;
+- issued and expiry timestamps;
+- nonce.
 
-The authority signs a decision:
-
-```ts
-interface ApprovalDecisionPayload {
-  schema: "agentproof.protocol.approval-decision";
-  schemaVersion: "1.0.0";
-  decision: "approved" | "rejected";
-  actionType: "agentproof.repository_patch.v1";
-  transactionId: string;
-  correlationId: string;
-  requestDigest: string;
-  authorityEnvironment: "development" | "production";
-  issuer: string;
-  issuedAt: string;
-  expiresAt: string;
-  nonce: string;
-}
-```
-
-The decision proof must include:
+Use proof fields:
 
 ```ts
 interface SignatureProof {
@@ -345,74 +276,91 @@ interface SignatureProof {
 }
 ```
 
-Use a separate development-authority binary:
+Provide a separate development authority:
 
 ```text
 agentproof-dev-authority --development
 ```
 
-It must require the explicit `--development` flag for key generation and decisions.
+It must require the explicit `--development` flag.
 
-Development decisions must contain:
-
-```text
-authorityEnvironment = "development"
-```
-
-They must fail closed when execution requires production authority.
+Development approval must fail when execution requires production authority.
 
 The primary CLI must have no:
 
-- `--force`;
-- `--skip-approval`;
-- `--auto-approve`;
-- implicit development-authority fallback.
+```text
+--force
+--skip-approval
+--auto-approve
+```
+
+and no implicit development-authority fallback.
 
 ## Execution request
 
-Execution must receive only identifiers, trusted authority policy and the signed approval:
+Require:
 
 ```ts
 interface ExecutionRequest {
   schema: "agentproof.protocol.execution-request";
   schemaVersion: "1.0.0";
   actionType: "agentproof.repository_patch.v1";
-  correlationId: string;
   transactionId: string;
+  correlationId: string;
   stateDirectory: string;
   idempotencyKey: string;
   requiredAuthorityEnvironment: "development" | "production";
   trustedAuthorityFingerprints: string[];
   approvalDecision: {
-    payload: ApprovalDecisionPayload;
+    payload: unknown;
     proof: SignatureProof;
   };
 }
 ```
 
-Before mutation, verify:
+Replace `unknown` with the exact approval payload type during implementation.
+
+Before mutation verify:
 
 - complete schema and version;
 - action type;
-- transaction ID;
-- correlation ID;
+- transaction and correlation IDs;
 - request digest;
-- decision is `approved`;
-- signature;
-- authority fingerprint;
-- required authority environment;
-- expiry;
-- nonce format;
-- prepared state still exists;
-- before-state still matches;
-- approval has not been consumed by another transaction;
-- idempotency key is valid and consistently bound.
+- approved decision;
+- approval signature and fingerprint;
+- authority environment;
+- expiry and nonce;
+- prepared state;
+- exact before-state;
+- unused approval;
+- consistent idempotency binding.
 
-Any mismatch must fail before the write.
+Any mismatch fails before a write.
 
-## Durable state machine
+## Durable state
 
-Persist this state machine:
+Persist at least:
+
+```text
+transactions
+idempotency_claims
+approval_consumption
+transaction_events
+receipts
+```
+
+Database constraints must enforce:
+
+- unique transaction IDs;
+- unique idempotency keys;
+- one transaction and request digest per idempotency key;
+- single-use approval payload digests;
+- ordered event sequence numbers;
+- unique receipt payload digests.
+
+Do not use in-memory maps as the source of truth.
+
+Use this state machine:
 
 ```text
 PREPARED
@@ -424,146 +372,80 @@ PREPARED
   → RECEIPT_SIGNED
   → COMPLETED
 
-Any state may transition to:
-  → REJECTED
-  → FAILED
-  → RECONCILIATION_REQUIRED
-  → COMPENSATION_REQUIRED
-  → COMPENSATED
+Failure and recovery states:
+  REJECTED
+  FAILED
+  RECONCILIATION_REQUIRED
+  COMPENSATION_REQUIRED
+  COMPENSATED
 ```
 
-Transitions must be append-only events with:
+Every transition appends an event containing transaction ID, correlation ID, sequence number, previous event digest, event digest, actor role, event type, timestamp and bounded metadata.
 
-- transaction ID;
-- correlation ID;
-- sequence number;
-- previous event digest;
-- event digest;
-- event type;
-- timestamp;
-- actor role;
-- bounded metadata.
+Never overwrite history to make the final state look cleaner.
 
-Do not overwrite history when status changes.
+## Exactly-once execution
 
-## Durable SQL records
+Exactly-once means one externally observable mutation for one approved transaction and idempotency key.
 
-Create durable records equivalent to:
+Implement:
 
-```sql
-CREATE TABLE transactions (
-  transaction_id TEXT PRIMARY KEY,
-  correlation_id TEXT NOT NULL,
-  action_type TEXT NOT NULL,
-  request_digest TEXT NOT NULL,
-  prepared_json TEXT NOT NULL,
-  state TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL
-);
+1. claim the idempotency key durably before mutation;
+2. bind it to transaction ID and request digest;
+3. reject the same key with different data;
+4. allow one winner under concurrent claims;
+5. store the terminal receipt with the claim;
+6. return the exact original receipt bytes on identical retry;
+7. reconcile non-terminal claims from observed state;
+8. never rerun mutation merely because signing or response delivery failed.
 
-CREATE TABLE idempotency_claims (
-  idempotency_key TEXT PRIMARY KEY,
-  transaction_id TEXT NOT NULL,
-  request_digest TEXT NOT NULL,
-  claimed_at TEXT NOT NULL,
-  terminal_receipt_json TEXT
-);
+The integration test must execute the same request twice and show identical SHA-256 values for both receipt files.
 
-CREATE TABLE approval_consumption (
-  approval_payload_digest TEXT PRIMARY KEY,
-  transaction_id TEXT NOT NULL,
-  consumed_at TEXT NOT NULL
-);
+## Separate executor
 
-CREATE TABLE transaction_events (
-  transaction_id TEXT NOT NULL,
-  sequence_number INTEGER NOT NULL,
-  event_type TEXT NOT NULL,
-  event_json TEXT NOT NULL,
-  previous_event_digest TEXT,
-  event_digest TEXT NOT NULL,
-  created_at TEXT NOT NULL,
-  PRIMARY KEY (transaction_id, sequence_number)
-);
+Run mutation in a child process with a narrow JSON document.
 
-CREATE TABLE receipts (
-  transaction_id TEXT NOT NULL,
-  receipt_payload_digest TEXT PRIMARY KEY,
-  receipt_json TEXT NOT NULL,
-  predecessor_payload_digest TEXT,
-  created_at TEXT NOT NULL
-);
-```
-
-Use database uniqueness, not in-memory maps, for idempotency and approval consumption.
-
-## Exactly-once semantics
-
-Exactly-once means one externally observable mutation for one approved transaction under one idempotency key.
-
-Implement these rules:
-
-1. Claim the idempotency key durably before mutation.
-2. Bind it to transaction ID and request digest.
-3. If the same key is retried with different transaction data, reject it.
-4. If a completed claim has a receipt, return the exact original signed receipt bytes.
-5. If a claim is non-terminal, inspect durable state and reconcile.
-6. Concurrent claims must have exactly one winner.
-7. Never rerun the mutation merely because receipt signing or transport failed.
-
-The end-to-end test must run the same execution request twice and prove both output files have the same SHA-256 value.
-
-## Separate executor process
-
-Run repository mutation in a child process with a narrow input document.
-
-The child process may receive:
+It may receive:
 
 - repository root;
 - exact operations;
-- expected before digests;
-- expected HEAD;
+- expected HEAD and before digests;
 - bounded policy;
-- transaction identifier.
+- transaction ID.
 
 It must not receive:
 
-- approval private key;
+- authority private key;
 - receipt-signing private key;
 - arbitrary shell text;
 - network credentials;
 - unrelated environment variables.
 
-Use an explicit environment allowlist when spawning it.
+Spawn with an explicit environment allowlist.
 
-Capture bounded stdout, stderr, exit code and timing evidence. Do not interpret exit code zero as verified success.
+Capture bounded exit code, stdout, stderr and timing evidence. Exit code zero is not proof of success.
 
-## Independent verification
+## Independent observation
 
-After execution, a verifier that did not perform the mutation must re-read the repository and determine the result.
+After mutation, a verifier that did not perform it must re-read the repository.
 
-Verify at least:
+Verify:
 
-- repository root identity;
+- repository identity;
 - branch and HEAD;
-- worktree state;
-- exact changed paths;
-- exact file digests;
-- no undeclared paths;
-- remotes unchanged;
-- `.git` metadata not modified outside expected worktree effects;
-- acceptance criteria represented by deterministic checks;
-- bounded command evidence where explicitly approved.
+- changed paths;
+- expected file digests;
+- no undeclared changes;
+- unchanged remotes;
+- bounded acceptance checks.
 
-Represent evidence as structured data:
+Represent the result as:
 
 ```ts
 interface VerifiedEvidence {
   verifierVersion: string;
   observedAt: string;
   repository: {
-    rootDigest: string;
     headSha: string;
     branch: string;
     remotesDigest: string;
@@ -578,7 +460,6 @@ interface VerifiedEvidence {
   }>;
   checks: Array<{
     name: string;
-    commandDigest?: string;
     exitCode?: number;
     stdoutDigest?: string;
     stderrDigest?: string;
@@ -588,92 +469,84 @@ interface VerifiedEvidence {
 }
 ```
 
-Only `verified_success` may produce a success receipt.
+Only `verified_success` can produce a success receipt.
 
-`unresolved` must remain unresolved. Do not transform absence of evidence into success.
+`unresolved` remains unresolved.
 
 ## Signed Receipt V2
 
-Use this exact domain separator:
+Use the exact domain separator:
 
 ```text
 agentproof.signed-receipt.v2\0
 ```
 
-The signature input is:
+Signature input:
 
 ```text
 UTF-8("agentproof.signed-receipt.v2\0" + canonicalJson(payload))
 ```
 
-The receipt contains only:
+Receipt shape:
 
 ```ts
 interface SignedReceiptV2 {
-  payload: SignedReceiptPayloadV2;
+  payload: {
+    schema: "agentproof.signed-receipt";
+    schemaVersion: "2.0.0";
+    receiptId: string;
+    actionType: "agentproof.repository_patch.v1";
+    transactionId: string;
+    correlationId: string;
+    idempotencyKeyDigest: string;
+    requestDigest: string;
+    authority: {
+      environment: "development" | "production";
+      issuer: string;
+      approvalPayloadDigest: string;
+      authorityKeyFingerprint: string;
+      expiresAt: string;
+      nonce: string;
+    };
+    execution: {
+      claimedAt: string;
+      startedAt: string;
+      observedAt: string;
+      completedAt: string;
+      executorVersion: string;
+    };
+    intent: {
+      summary: string;
+      requestedBy: string;
+      acceptanceCriteria: string[];
+    };
+    policyDigest: string;
+    evidence: VerifiedEvidence;
+    result: {
+      status: "verified_success" | "verified_failure" | "compensated";
+      summary: string;
+    };
+    predecessorPayloadDigest?: string;
+  };
   proof: SignatureProof;
 }
 ```
 
-The signed payload must include:
+`proof.payloadDigest` is SHA-256 of the exact domain-separated signature bytes.
 
-```ts
-interface SignedReceiptPayloadV2 {
-  schema: "agentproof.signed-receipt";
-  schemaVersion: "2.0.0";
-  receiptId: string;
-  actionType: "agentproof.repository_patch.v1";
-  transactionId: string;
-  correlationId: string;
-  idempotencyKeyDigest: string;
-  requestDigest: string;
-  authority: {
-    environment: "development" | "production";
-    issuer: string;
-    approvalPayloadDigest: string;
-    authorityKeyFingerprint: string;
-    expiresAt: string;
-    nonce: string;
-  };
-  execution: {
-    claimedAt: string;
-    startedAt: string;
-    observedAt: string;
-    completedAt: string;
-    executorVersion: string;
-  };
-  intent: {
-    summary: string;
-    requestedBy: string;
-    acceptanceCriteria: string[];
-  };
-  policyDigest: string;
-  evidence: VerifiedEvidence;
-  result: {
-    status: "verified_success" | "verified_failure" | "compensated";
-    summary: string;
-  };
-  predecessorPayloadDigest?: string;
-}
-```
+Every verified identity and policy claim must come from the signed payload, never an unsigned wrapper.
 
-`proof.payloadDigest` is SHA-256 of the exact domain-separated signature-input bytes.
+## Validity is not trust
 
-Every identity or policy claim returned by the verifier must come from this signed payload, never from an unsigned transport wrapper.
-
-## Signer fingerprint
-
-Derive the signer fingerprint from the canonical public key representation using SHA-256 and format it consistently, for example:
+Derive the signer fingerprint from the canonical public key representation using SHA-256:
 
 ```text
 sha256:<lowercase-hex>
 ```
 
-The receipt may embed the public key so an offline verifier can check signature self-consistency.
+An embedded public key proves signature self-consistency only.
 
-That embedded key does not establish identity.
-
-Trust requires the caller to supply an acceptable signer fingerprint out of band:
+The offline verifier requires a trusted fingerprint supplied out of band:
 
 ```text
 agentproof verify-receipt \
@@ -681,7 +554,7 @@ agentproof verify-receipt \
   --trust-fingerprint sha256:<trusted-fingerprint>
 ```
 
-Return separate fields:
+Return separately:
 
 ```ts
 {
@@ -693,50 +566,49 @@ Return separate fields:
 }
 ```
 
-A valid signature from an unpinned key must produce:
+A valid signature from an unpinned key must return:
 
 ```text
 cryptographicallyValid = true
 trusted = false
 ```
 
-## Legacy receipt rejection
+## Legacy receipts
 
-Add an explicit legacy-receipt failure.
+Reject a legacy receipt format that failed to bind authority environment, transaction ID or correlation ID.
 
-A previous receipt format that did not bind authority environment, transaction ID and correlation ID must never return `trusted: true`, even when its inner Ed25519 signature is mathematically valid.
-
-Return a stable reason such as:
+Even a mathematically valid legacy signature must return:
 
 ```text
-legacy_unbound_receipt
+trusted = false
+reason = "legacy_unbound_receipt"
 ```
 
-Do not silently upgrade, rewrite or re-sign legacy receipts. Preserve them as historical untrusted evidence.
+Do not rewrite, upgrade or re-sign historical receipts in place.
 
-## Crash recovery and reconciliation
+## Crash reconciliation
 
-Filesystem mutation and SQL state cannot form one atomic distributed transaction.
+Filesystem mutation and SQL cannot form one atomic distributed transaction.
 
-Handle crashes at every boundary:
+Test crashes:
 
-- after idempotency claim but before mutation;
-- during file writes;
-- after mutation but before observation;
-- after observation but before receipt signing;
-- after receipt signing but before response delivery.
+- after claim, before mutation;
+- during mutation;
+- after mutation, before observation;
+- after observation, before signing;
+- after signing, before response delivery.
 
 On restart:
 
-1. load the prepared transaction and event chain;
-2. re-observe repository state;
+1. load prepared state and event chain;
+2. re-observe the repository;
 3. classify it as exact-before, exact-after, divergent or unreadable;
-4. continue only from evidence;
-5. sign a success receipt only for exact verified-after state;
-6. return the original receipt if it was already signed;
-7. require compensation or escalation for divergent state.
+4. continue only from that evidence;
+5. sign success only for verified exact-after state;
+6. return the stored receipt if already signed;
+7. require compensation or escalation for divergence.
 
-Do not rerun the write merely because the last recorded state is `EXECUTING`.
+Never rerun a write solely because the last event says `EXECUTING`.
 
 ## Compensation
 
@@ -744,27 +616,27 @@ Compensation is a new authenticated action.
 
 It must:
 
-- require the trusted predecessor receipt;
-- re-verify the predecessor signature and pinned signer;
-- confirm the current repository state matches the predecessor's verified after-state;
-- restore the exact prepared before-state when possible;
-- independently verify the restoration;
+- require a trusted predecessor receipt;
+- verify its signature, fingerprint and authority policy;
+- confirm current state matches its verified after-state;
+- restore the prepared before-state when possible;
+- independently verify restoration;
 - issue a new signed Receipt V2;
-- set `predecessorPayloadDigest` to the predecessor's signed payload digest.
+- bind the predecessor using `predecessorPayloadDigest`.
 
-Never mutate or replace the predecessor receipt.
+Never mutate the predecessor receipt.
 
-A valid chain is append-only:
+The chain is append-only:
 
 ```text
-original verified receipt
+verified action receipt
   → compensation receipt
   → optional later successor
 ```
 
-Reject broken or untrusted predecessor chains.
+Reject broken or untrusted chains.
 
-## CLI
+## CLI and SDK
 
 Implement:
 
@@ -781,132 +653,69 @@ agentproof-dev-authority --development keygen --private-key-output <private.pem>
 agentproof-dev-authority --development decide --input <approval-request.json> --private-key <private.pem> --decision approved --issuer <issuer>
 ```
 
-CLI output must be machine-readable JSON on stdout. Human diagnostics go to stderr. Never print private key material.
+Stdout is machine-readable JSON. Human diagnostics go to stderr. Never print private keys.
 
-## SDK exports
-
-Expose only stable public operations:
+Expose stable SDK operations:
 
 ```ts
-export {
-  prepareRepositoryPatch,
-  createApprovalRequest,
-  executeApprovedTransaction,
-  getTransactionStatus,
-  reconcileRepositoryPatch,
-  compensateRepositoryPatchWithReceipt,
-  verifyReceipt,
-};
+prepareRepositoryPatch
+createApprovalRequest
+executeApprovedTransaction
+getTransactionStatus
+reconcileRepositoryPatch
+compensateRepositoryPatchWithReceipt
+verifyReceipt
 ```
 
-Keep internal storage, canonicalisation and executor plumbing private unless a public type is required.
+## Required tests
 
-## Security constraints
-
-Fail closed for:
-
-- altered prepared transactions;
-- altered approval decisions;
-- expired approvals;
-- replayed approvals;
-- reused idempotency keys with different data;
-- untrusted authority fingerprints;
-- untrusted receipt signer fingerprints;
-- development approval presented as production authority;
-- before-state drift;
-- dirty or wrong repositories;
-- detached HEAD;
-- path escapes;
-- symlinks;
-- submodules;
-- `.git` writes;
-- undeclared changes;
-- malformed or duplicate-key JSON;
-- oversized patches;
-- secret-bearing paths or content;
-- missing verification evidence;
-- broken predecessor chains.
-
-Document what the system does not prove:
-
-- that the proposer is benevolent;
-- that user-selected verification commands are complete;
-- that the OS account is uncompromised;
-- that process separation is an OS sandbox;
-- that a development key is production authority;
-- that an embedded public key is a trusted identity;
-- that exact-once SQL claiming creates a distributed atomic commit with the filesystem.
-
-## Tests
-
-Write unit, integration and adversarial tests.
-
-At minimum prove:
+Write unit, integration and adversarial tests proving:
 
 ### Preparation
 
-- clean allowlisted one-file patch prepares successfully;
-- dirty repository is rejected;
-- path traversal is rejected;
-- `.git` path is rejected;
-- symlink and submodule cases are rejected;
-- before-state drift is detected;
-- byte and file limits are enforced.
+- a clean allowlisted one-file patch prepares;
+- dirty, detached, symlinked, submodule or drifting repositories fail;
+- path traversal and `.git` paths fail;
+- undeclared paths and size limits fail.
 
 ### Approval
 
-- approval binds transaction ID, correlation ID and request digest;
-- changed action data invalidates approval;
-- expired approval is rejected;
-- altered authority environment is rejected;
-- development authority cannot satisfy production policy;
-- one approval cannot authorise a different transaction.
+- transaction ID, correlation ID and request digest are bound;
+- altered or expired decisions fail;
+- one approval cannot authorise another transaction;
+- development authority cannot satisfy production policy.
 
-### Exactly-once execution
+### Exactly once
 
-- first execution mutates once;
-- identical retry returns byte-for-byte identical signed receipt;
-- same idempotency key with different transaction is rejected;
-- concurrent identical executions produce one mutation and one terminal receipt;
-- approval consumption is durable across process restart.
+- the first execution mutates once;
+- identical retry returns byte-for-byte identical receipt;
+- conflicting idempotency reuse fails;
+- concurrent execution has one winner;
+- approval consumption survives restart.
 
-### Verification
+### Verification and receipts
 
-- exit code zero with wrong repository state is not success;
-- undeclared file changes fail verification;
-- remotes or HEAD drift fail verification;
-- verified evidence is assembled by re-observation;
-- unresolved state remains unresolved.
-
-### Receipts
-
-- valid receipt verifies cryptographically;
-- trusted fingerprint produces `trusted: true`;
-- different fingerprint produces valid-but-untrusted;
+- exit code zero with wrong state is failure;
+- undeclared changes or remote drift fail;
+- unpinned signer is valid but untrusted;
 - changing any signed field breaks verification;
-- payload digest is recomputed;
-- duplicate-key JSON is rejected;
-- legacy unbound receipt never becomes trusted;
-- verified identities come only from signed payload.
+- duplicate-key JSON fails;
+- legacy unbound receipt is never trusted;
+- identities are derived only from signed payload.
 
-### Recovery
+### Recovery and compensation
 
-- crash before mutation resumes without writing twice;
+- crash before mutation does not duplicate;
 - crash after mutation reconciles exact-after state;
-- crash after signing returns the stored original receipt;
-- divergent state does not become success.
-
-### Compensation
-
+- crash after signing returns the stored receipt;
+- divergent state cannot become success;
 - compensation requires a trusted predecessor;
-- restoration is independently verified;
-- successor binds predecessor payload digest;
-- predecessor receipt remains unchanged;
-- broken chain is rejected.
+- successor binds predecessor digest;
+- predecessor remains unchanged.
 
-## Reproducible end-to-end demonstration
+## Reproducible demonstration
 
-Create a disposable Git repository:
+Create a disposable repository:
 
 ```sh
 LAB="$(mktemp -d)"
@@ -923,13 +732,13 @@ git -C "$REPO" add protected.txt
 git -C "$REPO" commit -m baseline
 ```
 
-Prepare a request that writes exactly:
+Prepare one approved write changing `protected.txt` to:
 
 ```text
 after
 ```
 
-to `protected.txt`, with:
+Use:
 
 ```text
 correlationId = "readme-quickstart-001"
@@ -938,68 +747,65 @@ maxFiles = 1
 allowedTrackedPaths = ["protected.txt"]
 ```
 
-Then demonstrate:
+Demonstrate:
 
-1. preparation;
-2. approval request with a ten-minute expiry;
+1. prepare;
+2. ten-minute approval request;
 3. development authority key generation;
 4. signed development approval;
-5. receipt signer key generation;
+5. independent receipt key generation;
 6. execution;
-7. offline verification with the pinned receipt fingerprint;
-8. identical execution retry;
-9. SHA-256 equality of original and retry receipts;
+7. offline verification using the pinned receipt fingerprint;
+8. identical retry;
+9. receipt SHA-256 equality;
 10. compensation;
 11. clean repository after compensation.
 
-Expected evidence:
+Expected verification:
 
 ```text
 cryptographicallyValid: true
 trusted: true
 ```
 
-The two receipt files must have identical SHA-256 values.
+The compensation receipt must bind the original payload digest.
 
-The compensation receipt must contain the original receipt's payload digest as `predecessorPayloadDigest`.
-
-The final command must prove:
+The final check must pass:
 
 ```sh
 test "$(git -C "$REPO" status --porcelain)" = ""
 ```
 
-## Documentation
+## Security documentation
 
-Write:
+Document explicitly that the system does not prove:
 
-- a trust model explaining all five roles;
-- the exact Receipt V2 signature and canonicalisation protocol;
-- the protected repository-patch action;
-- recovery and compensation semantics;
-- development-versus-production authority limitations;
-- an offline verification guide;
-- a security limitations section.
+- the proposer is benevolent;
+- chosen verification commands are complete;
+- the OS account is uncompromised;
+- process separation is an OS sandbox;
+- a development key is production authority;
+- an embedded public key is trusted identity;
+- SQL claiming and filesystem mutation form an atomic distributed commit.
 
-Do not describe development authority, shared-user process separation or an embedded public key as production-grade identity security.
+Fail closed for altered approvals, expired authority, replay, inconsistent idempotency, untrusted fingerprints, before-state drift, path escapes, secret-bearing content, undeclared changes, missing evidence and broken predecessor chains.
 
 ## Completion contract
 
-Do not report completion until all of the following are true:
+Do not report completion until:
 
-- the package builds from a clean checkout;
-- strict type checking passes;
+- clean-checkout build and strict type checking pass;
 - all unit, integration and adversarial tests pass;
-- the disposable repository demonstration passes;
-- the retry receipt is byte-for-byte identical;
-- offline verification distinguishes validity from trust;
+- the disposable demonstration passes;
+- retry receipts are byte-for-byte identical;
+- validity and trust are distinguished;
 - production policy rejects development authority;
-- crash reconciliation is tested after the mutation boundary;
-- compensation produces a linked successor receipt;
-- no primary CLI bypasses approval;
-- no private key is available to the executor;
-- no success receipt can be produced from executor claims alone;
-- documentation states the remaining trust limitations honestly.
+- post-mutation crash reconciliation is proven;
+- compensation emits a linked successor;
+- the primary CLI has no approval bypass;
+- the executor has no signing private keys;
+- executor claims alone cannot create success receipts;
+- limitations are documented honestly.
 
 Finish with:
 
@@ -1014,4 +820,4 @@ Known limitations:
 Next safe extension:
 ```
 
-The next safe extension should name one additional bounded action and explain which invariants are reused. Do not claim arbitrary-tool support until that action has its own preparation, authority, execution, observation, verification and receipt contract.
+Name one additional bounded action as the next safe extension and explain which invariants are reused. Do not claim arbitrary-tool support until that action has its own preparation, authority, execution, observation, verification and receipt contract.
