@@ -43,6 +43,7 @@ To add or find a prompt, look inside the category folder that fits it. New categ
 
 | Category | Description | Prompts |
 | --- | --- | --- |
+| [Agents](agents) | Prompts for durable agent runtimes and verified automation | [Graph-native agent system migration](agents/graph-native-agent-system-migration.md) — migrate task runners into a durable graph runtime |
 | [Socials](socials) | Prompts for social and video content | [Audiogram](socials/audiogram.md) — build a 1:1 audiogram in Remotion |
 
 _More categories will be added over time._
