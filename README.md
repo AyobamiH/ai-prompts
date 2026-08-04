@@ -44,6 +44,7 @@ To add or find a prompt, look inside the category folder that fits it. New categ
 | Category | Description | Prompts |
 | --- | --- | --- |
 | [Socials](socials) | Prompts for social and video content | [Audiogram](socials/audiogram.md) — build a 1:1 audiogram in Remotion |
+| [Marketing](marketing) | Prompts for evidence-backed product and service campaigns | [Self-identifying product campaign](marketing/self-identifying-product-campaign.md) — help the right audience recognise a real problem without pressure |
 
 _More categories will be added over time._
 
