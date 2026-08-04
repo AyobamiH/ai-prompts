@@ -43,6 +43,7 @@ To add or find a prompt, look inside the category folder that fits it. New categ
 
 | Category | Description | Prompts |
 | --- | --- | --- |
+| [Engineering](engineering) | Prompts for evidence-led diagnostics and production repair | [Evidence-first live diagnostic and repair](engineering/evidence-first-live-diagnostic-repair.md) — repair external write paths without duplicates |
 | [Socials](socials) | Prompts for social and video content | [Audiogram](socials/audiogram.md) — build a 1:1 audiogram in Remotion |
 
 _More categories will be added over time._
