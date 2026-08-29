@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cloudflare MCP Plugin Platform"
+  short_description: "Build secure MCP plugins on Cloudflare"
+  default_prompt: "Use $cloudflare-mcp-plugin-platform to design and validate a Cloudflare-hosted MCP plugin with OAuth, state, and sandboxed execution."

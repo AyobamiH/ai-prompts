@@ -1,0 +1,4 @@
+interface:
+  display_name: "Authority-First Product Architecture"
+  short_description: "Define authority boundaries and product roles"
+  default_prompt: "Use $authority-first-product-architecture to define trust boundaries, authority envelopes, and product contracts."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Provider Adapter Ownership"
+  short_description: "Own contracts while keeping providers replaceable"
+  default_prompt: "Use $provider-adapter-ownership to define stable local interfaces, pin external providers, and preserve exit paths."

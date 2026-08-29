@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Governance Repository"
+  short_description: "Prevent cross-product role and status drift"
+  default_prompt: "Use $portfolio-governance-repository to govern product roles, integration contracts, status, and roadmap across repositories."

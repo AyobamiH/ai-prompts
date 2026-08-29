@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verified npm Package Release"
+  short_description: "Publish and independently verify an npm release"
+  default_prompt: "Use $verified-npm-package-release to prepare, publish, and verify an npm package release without version or artifact drift."

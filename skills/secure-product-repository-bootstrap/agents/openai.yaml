@@ -1,0 +1,4 @@
+interface:
+  display_name: "Secure Product Repository Bootstrap"
+  short_description: "Bootstrap a governed production repository"
+  default_prompt: "Use $secure-product-repository-bootstrap to create a secure repository foundation with policy, schemas, tests, CI, and release controls."

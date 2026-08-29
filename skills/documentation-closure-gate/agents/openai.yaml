@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation Closure Gate"
+  short_description: "Keep code, docs, evidence, and Git aligned"
+  default_prompt: "Use $documentation-closure-gate to verify that implementation, documentation, CI, deployment, and evidence agree on one commit."

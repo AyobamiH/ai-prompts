@@ -1,0 +1,4 @@
+interface:
+  display_name: "Autonomous Repository Maintenance"
+  short_description: "Operate bounded PR-only repository maintenance"
+  default_prompt: "Use $autonomous-repository-maintenance to design a selected-repository maintenance loop with PR-only repair and independent verification."

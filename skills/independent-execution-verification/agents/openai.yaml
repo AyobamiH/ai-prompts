@@ -1,0 +1,4 @@
+interface:
+  display_name: "Independent Execution Verification"
+  short_description: "Gate actions on independent signed verification"
+  default_prompt: "Use $independent-execution-verification to bind an execution handoff to exact evidence and validate a signed verifier result."

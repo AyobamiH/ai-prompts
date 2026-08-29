@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deterministic Evidence Graph"
+  short_description: "Compute exact-subject evidence verdicts safely"
+  default_prompt: "Use $deterministic-evidence-graph to model evidence, detect contradictions, and compute a deterministic verdict."

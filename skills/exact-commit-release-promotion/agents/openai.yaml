@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exact-Commit Release Promotion"
+  short_description: "Promote one verified commit without drift"
+  default_prompt: "Use $exact-commit-release-promotion to validate and promote the same commit through CI, deployment, and release."

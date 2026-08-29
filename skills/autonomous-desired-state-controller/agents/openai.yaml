@@ -1,0 +1,4 @@
+interface:
+  display_name: "Autonomous Desired-State Controller"
+  short_description: "Build bounded outcome-driven reconciliation loops"
+  default_prompt: "Use $autonomous-desired-state-controller to turn a desired outcome and standing policy into a safe reconciliation loop."
