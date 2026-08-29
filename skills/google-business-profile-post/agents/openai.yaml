@@ -1,0 +1,4 @@
+interface:
+  display_name: "Google Business Profile Post"
+  short_description: "Publish media-backed GBP updates safely"
+  default_prompt: "Use $google-business-profile-post to prepare and verify this Google Business Profile update."

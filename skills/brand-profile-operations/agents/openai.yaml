@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Profile Operations"
+  short_description: "Build and verify complete brand profiles"
+  default_prompt: "Use $brand-profile-operations to complete and publicly verify this brand profile."

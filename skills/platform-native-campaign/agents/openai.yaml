@@ -1,0 +1,4 @@
+interface:
+  display_name: "Platform Native Campaign"
+  short_description: "Adapt one proven story for each network"
+  default_prompt: "Use $platform-native-campaign to adapt this evidence-backed story into native channel assets without publishing them."

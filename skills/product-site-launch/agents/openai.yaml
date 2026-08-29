@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Site Launch"
+  short_description: "Build and prove a production product site"
+  default_prompt: "Use $product-site-launch to take this product site from architecture through verified public launch."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Approval Safe Social Publishing"
+  short_description: "Publish once, reconcile, and verify readback"
+  default_prompt: "Use $approval-safe-social-publishing to publish this approved payload once and verify the provider result."

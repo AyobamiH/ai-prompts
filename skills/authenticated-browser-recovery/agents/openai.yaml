@@ -1,0 +1,4 @@
+interface:
+  display_name: "Authenticated Browser Recovery"
+  short_description: "Resume approved browser work without duplicates"
+  default_prompt: "Use $authenticated-browser-recovery to resume this approved browser action from its last verified state."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evidence-Led GTM Operator"
+  short_description: "Run GTM from verified product evidence"
+  default_prompt: "Use $evidence-led-gtm-operator to build an evidence-led GTM baseline and immediate campaign queue."

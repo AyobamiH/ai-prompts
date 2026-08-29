@@ -1,0 +1,4 @@
+interface:
+  display_name: "Live GTM Readiness Audit"
+  short_description: "Recheck product truth before campaigns launch"
+  default_prompt: "Use $live-gtm-readiness-audit to audit current product and launch readiness from live evidence."

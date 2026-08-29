@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Brand Architecture"
+  short_description: "Structure brands, products, domains, and pages"
+  default_prompt: "Use $product-brand-architecture to design the company, product, domain, and account structure for this portfolio."
