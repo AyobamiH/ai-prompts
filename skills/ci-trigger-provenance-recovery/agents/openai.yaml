@@ -1,0 +1,4 @@
+interface:
+  display_name: "CI Trigger Provenance Recovery"
+  short_description: "Diagnose missing CI runs and restore exact-head proof"
+  default_prompt: "Use $ci-trigger-provenance-recovery to explain why CI did not run and restore proof for the exact commit."

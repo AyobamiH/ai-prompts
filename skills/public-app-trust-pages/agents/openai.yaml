@@ -1,0 +1,4 @@
+interface:
+  display_name: "Public App Trust Pages"
+  short_description: "Build truthful health, privacy, and terms pages"
+  default_prompt: "Use $public-app-trust-pages to add truthful public health, privacy, terms, support, and deletion surfaces for this app."

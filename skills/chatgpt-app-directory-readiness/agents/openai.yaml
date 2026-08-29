@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChatGPT App Directory Readiness"
+  short_description: "Prepare a verified ChatGPT app directory handoff"
+  default_prompt: "Use $chatgpt-app-directory-readiness to prepare and verify this ChatGPT app directory draft without submitting it."

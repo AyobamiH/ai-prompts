@@ -1,0 +1,4 @@
+interface:
+  display_name: "Owner-Only Provider Checkpoint"
+  short_description: "Batch unavoidable owner confirmations safely"
+  default_prompt: "Use $owner-only-provider-checkpoint to prepare one precise approval checkpoint for the unavoidable owner actions."

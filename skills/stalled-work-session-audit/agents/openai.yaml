@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stalled Work Session Audit"
+  short_description: "Verify what an interrupted agent run actually finished"
+  default_prompt: "Use $stalled-work-session-audit to verify what this interrupted agent run completed, blocked, or left unproven."

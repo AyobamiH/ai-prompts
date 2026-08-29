@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChatGPT App Connection Refresh"
+  short_description: "Refresh and verify a changed ChatGPT app tool surface"
+  default_prompt: "Use $chatgpt-app-connection-refresh to refresh the connected app and verify its discovered tools against the expected manifest."

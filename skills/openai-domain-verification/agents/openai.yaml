@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenAI Domain Verification"
+  short_description: "Complete exact-value OpenAI domain verification"
+  default_prompt: "Use $openai-domain-verification to publish and verify the exact OpenAI domain challenge safely."

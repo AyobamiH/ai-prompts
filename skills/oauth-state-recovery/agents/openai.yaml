@@ -1,0 +1,4 @@
+interface:
+  display_name: "OAuth State Recovery"
+  short_description: "Recover expired OAuth flows without retry loops"
+  default_prompt: "Use $oauth-state-recovery to diagnose and recover this expired or stale OAuth authorization flow."
