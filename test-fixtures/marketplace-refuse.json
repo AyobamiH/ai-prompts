@@ -1,0 +1,12 @@
+{
+  "app_subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1",
+  "target_state": "published_verified",
+  "expected_installation_scope": "selected_repositories",
+  "observed_installation_scope": "all_repositories",
+  "expected_permissions": {"contents": "read", "pull_requests": "write"},
+  "observed_permissions": {"contents": "write", "pull_requests": "write"},
+  "expected_events": ["pull_request"],
+  "observed_events": ["pull_request", "push"],
+  "webhook_secret": "must-never-appear-in-a-record",
+  "gates": {}
+}

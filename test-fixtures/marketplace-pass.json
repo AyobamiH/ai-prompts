@@ -1,0 +1,33 @@
+{
+  "app_subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1",
+  "target_state": "review_ready",
+  "expected_installation_scope": "selected_repositories",
+  "observed_installation_scope": "selected_repositories",
+  "expected_permissions": {
+    "contents": "read",
+    "metadata": "read",
+    "pull_requests": "write"
+  },
+  "observed_permissions": {
+    "contents": "read",
+    "metadata": "read",
+    "pull_requests": "write"
+  },
+  "expected_events": ["installation", "installation_repositories", "pull_request"],
+  "observed_events": ["installation", "installation_repositories", "pull_request"],
+  "gates": {
+    "app_identity": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:app"},
+    "public_profile": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:profile"},
+    "trust_and_support_pages": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "live-probe:trust-pages"},
+    "callback_and_webhook_urls": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:urls"},
+    "webhook_secret_configured": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:secret-version"},
+    "permission_model": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:permissions"},
+    "installation_policy": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "installation:157513439"},
+    "marketplace_agreement": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:agreement"},
+    "listing_content": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "provider-readback:listing-draft"},
+    "billing_and_legal_declarations": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "owner-attestation:legal-v1"},
+    "webhook_delivery": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "delivery:example-id"},
+    "install_uninstall_test": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "test-run:install-lifecycle"},
+    "release_validation": {"subject": "github-app:4761698:donestate-maintenance-ayobamih:listing-v1", "status": "pass", "evidence_ref": "commit:0123456789abcdef0123456789abcdef01234567"}
+  }
+}

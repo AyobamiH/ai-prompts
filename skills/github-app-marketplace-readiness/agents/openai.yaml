@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub App Marketplace Readiness"
+  short_description: "Verify a GitHub App Marketplace handoff"
+  default_prompt: "Use $github-app-marketplace-readiness to prepare and verify this GitHub App Marketplace state without submitting or publishing it."

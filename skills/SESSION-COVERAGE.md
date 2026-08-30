@@ -2,7 +2,9 @@
 
 Snapshot source: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc>
 
-Snapshot endpoint: fresh OAuth consent page ready, with consent, GitHub scopes, and icon upload awaiting owner confirmation. Review submission, final attestations, and publication remained excluded.
+Initial snapshot endpoint: fresh OAuth consent page ready, with consent, GitHub scopes, and icon upload awaiting owner confirmation.
+
+Continuation endpoint: GitHub App `donestate-maintenance-ayobamih` (App ID `4761698`) installed as installation `157513439` only on `AyobamiH/donestate`; a PR-only docs canary produced PR #22 at commit `ffec48e6...`, passed 22/22 tests and CI, and was not merged. Independent verification remained `uncertain`, so the gate stayed awaiting verification. The GitHub Marketplace agreement was accepted and `DONE_STATE_GITHUB_MARKETPLACE_WEBHOOK_SECRET` was stored, but the provider webhook update had not yet been confirmed; review submission and publication remained excluded.
 
 ## Coverage map
 
@@ -16,6 +18,9 @@ Snapshot endpoint: fresh OAuth consent page ready, with consent, GitHub scopes, 
 | Refresh the connected DoneState app and verify current maintenance tools | New: `chatgpt-app-connection-refresh` |
 | Diagnose absent workflow runs for connector-authored commits | New: `ci-trigger-provenance-recovery` |
 | Group unavoidable account actions into one precise owner checkpoint | New: `owner-only-provider-checkpoint` |
+| Prepare a GitHub App Marketplace listing while separating agreement, webhook, legal-owner, review, approval, and publication states | New: `github-app-marketplace-readiness` |
+| Synchronize a Marketplace webhook secret without recording its value and require signed-delivery readback | Included in `github-app-marketplace-readiness`; the observed session stopped before provider update confirmation |
+| Exercise one selected-repository PR-only maintenance canary and stop on an `uncertain` independent-verifier result | Reused: `autonomous-repository-maintenance` and `independent-execution-verification`; no duplicate canary skill created |
 | Resume bounded repository work from durable state | Reused: `agent/autonomous-coding-workflow` |
 | Classify missing connector, runtime, configuration, and approval capabilities | Reused: `agent/capability-gap-learning-system` |
 | Inspect repositories, services, packages, routes, and live state without mutation | Reused: `agent/read-only-production-reconnaissance` |
