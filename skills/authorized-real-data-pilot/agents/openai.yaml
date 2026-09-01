@@ -1,0 +1,4 @@
+interface:
+  display_name: "Authorized Real-Data Pilot"
+  short_description: "Gate lawful real-data pilot evidence"
+  default_prompt: "Use $authorized-real-data-pilot to approve and evaluate this real dataset without overstating product-market evidence."

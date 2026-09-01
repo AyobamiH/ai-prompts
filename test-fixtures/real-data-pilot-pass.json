@@ -1,0 +1,11 @@
+{
+  "schema": "authorized-real-data-pilot.v1",
+  "target_state": "market_evidence",
+  "dataset": {"id": "target-market-sales-2026-09", "jurisdiction": "target-jurisdiction", "source_kind": "licensed", "source_ref": "registry:licensed-export-2026-09", "acquired_at": "2026-09-01T09:00:00Z", "checksum": "sha256:approved-dataset", "provenance_ref": "provenance:record-001", "rights_basis": "licensed evaluation", "allowed_purpose": "private product evaluation", "retention_days": 30, "deletion_path": "runbook:delete-pilot-dataset", "classification": "confidential", "schema_validation": "pass", "target_market_relevance": true, "approval_ref": "approval:data-001"},
+  "approvals": {"rights": true, "use": true, "retention": true, "no_shared_training": true},
+  "tenant_isolation": true,
+  "data_minimized": true,
+  "shared_training_use": false,
+  "raw_records_in_manifest": false,
+  "evaluation": {"real_users": 5, "non_founder_users": 4, "completed_tasks": 10, "product_revision": "commit:pilot-v1", "dataset_checksum": "sha256:approved-dataset", "baseline_defined": true, "outcome_metric": "verified tasks completed", "failures_recorded": true, "authorized_user_participation": true, "product_market_fit_claimed": false}
+}

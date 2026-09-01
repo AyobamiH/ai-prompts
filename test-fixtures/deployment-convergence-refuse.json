@@ -1,0 +1,19 @@
+{
+  "schema": "deployment-revision-convergence.v1",
+  "source_sha": "moving-main",
+  "artifact_digest": "",
+  "deployment_id": "deploy-unknown",
+  "environment": "staging",
+  "revision_marker": "new",
+  "provider_deploy_state": "success",
+  "provider_readback": false,
+  "required_consecutive_matches": 1,
+  "observations": [
+    {"observed_at": "", "source": "edge", "status": "ready", "revision_marker": "old"}
+  ],
+  "authenticated_probe": {"after_convergence": false, "revision_marker": "old", "status": "pass"},
+  "retry_policy": {"maximum_retries": 3, "retries_used": 2, "reconcile_before_retry": false, "stop_after_repeat": false},
+  "diagnostics": {"sanitized": false, "remote_tool_names_only": false, "response_bodies_logged": true, "secret_values_logged": true, "old_revision_response_treated_as_new_schema": true},
+  "repeated_failure_after_retry": true,
+  "rollback": {"known_good_sha": "", "deployment_id": "", "provenance_verified": false, "restoration_probe": false}
+}

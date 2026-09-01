@@ -1,0 +1,4 @@
+interface:
+  display_name: "Overlapping PR Convergence"
+  short_description: "Reconcile merged and overlapping PRs"
+  default_prompt: "Use $overlapping-pr-convergence to classify these overlapping pull requests against the current default branch."

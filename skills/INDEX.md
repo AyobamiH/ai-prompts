@@ -2,6 +2,8 @@
 
 This collection packages the new reusable methods exercised across the shared "Completion status summary" snapshot and its continuing "Continue GitHub Setup" work session. The initial snapshot ended at a fresh owner OAuth consent checkpoint; the continuation advanced through OAuth handoff repair, external review access, selected-repository maintenance, GitHub Marketplace lifecycle handling, self-documenting governance, and isolated development deployment recovery.
 
+The collection was expanded from the ongoing "Verify report Steps", "Verify remaining gates", and "OpenAI submission status" chats. That review added shipped-package consumer contracts, overlapping-PR reconciliation, deployment revision convergence, private-pilot owner bootstrap, authorized real-data evaluation, and a distribution-channel state chain without copying platform capabilities or skills already packaged on other branches.
+
 Source session: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc>
 
 ## New skills
@@ -20,11 +22,17 @@ Source session: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc>
 | [external-reviewer-access-boundary](external-reviewer-access-boundary/SKILL.md) | Provide stable least-authority application access for an external reviewer and prove consequential actions remain denied |
 | [marketplace-lifecycle-entitlements](marketplace-lifecycle-entitlements/SKILL.md) | Ingest signed marketplace lifecycle events with monotonic, idempotent entitlements and privacy-minimal receipts |
 | [self-documenting-project-governance](self-documenting-project-governance/SKILL.md) | Make a machine ledger canonical, generate human status views, and reject undocumented governance drift in CI |
-| [deployment-environment-secret-isolation](deployment-environment-secret-isolation/SKILL.md) | Prevent and recover credential or deployment writes that resolve to the wrong environment target |
+| [deployment-environment-secret-isolation](deployment-environment-secret-isolation/SKILL.md) | Prevent cross-environment writes and keep provider credentials scoped to exact mutation steps |
+| [package-consumer-contract-gate](package-consumer-contract-gate/SKILL.md) | Verify built, packed, clean-installed, and alternate release artifacts against the documented consumer contract |
+| [overlapping-pr-convergence](overlapping-pr-convergence/SKILL.md) | Reconcile merged or conflicting overlapping PRs by content and preserve only the remaining delta |
+| [deployment-revision-convergence](deployment-revision-convergence/SKILL.md) | Prove the exact revision is consistently serving before authenticated or schema-sensitive verification |
+| [private-pilot-owner-bootstrap](private-pilot-owner-bootstrap/SKILL.md) | Bootstrap exactly one protected product-local owner after hardened authentication converges |
+| [authorized-real-data-pilot](authorized-real-data-pilot/SKILL.md) | Gate lawful, relevant real data and bounded real-user evidence without claiming product-market fit |
+| [distribution-channel-state-reconciliation](distribution-channel-state-reconciliation/SKILL.md) | Reconcile draft, review, publication, discoverability, installation, and live-outcome states |
 
 ## Deterministic helpers
 
-Eleven standard-library Python helpers validate:
+Seventeen standard-library Python helpers validate:
 
 - Task completion against required exact-subject evidence
 - App-directory readiness gates against one release subject
@@ -36,7 +44,13 @@ Eleven standard-library Python helpers validate:
 - External reviewer read-only authority, exact callback origins, expiry, revocation, and refusal tests
 - Marketplace signature, complete lifecycle, monotonicity, authority separation, and receipt privacy
 - Project-ledger completeness, evidence binding, generated views, governance-impact enforcement, and secret exclusion
-- Distinct environment, service, configuration, credential, secret, deployment, and live-probe targets
+- Distinct environment, service, configuration, credential, secret, deployment, live-probe, and credential-bearing workflow-step targets
+- Shipped package paths, clean-consumer entrypoints, supported toolchains, output equivalence, durable CI, documentation, and upstream review state
+- Overlapping pull-request changes against current default-branch content, exact-head checks, and no-force/no-merge boundaries
+- Consecutive exact-revision observations, authenticated-probe sequencing, bounded retry, sanitized diagnostics, and rollback provenance
+- Protected single-use owner bootstrap, product-local authority, exact scopes, refusal tests, cleanup, and sanitized receipts
+- Real-dataset provenance, rights, purpose, retention, deletion, isolation, user authority, outcome measurement, and bounded evidence thresholds
+- Immutable distribution subjects across provider control, public directory, clean installation, and runtime outcome surfaces
 
 The helpers do not replace live provider readback, cryptographic checks, legal review, OAuth consent, directory attestations, or publication approval.
 

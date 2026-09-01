@@ -1,0 +1,4 @@
+interface:
+  display_name: "Private Pilot Owner Bootstrap"
+  short_description: "Provision one protected pilot owner"
+  default_prompt: "Use $private-pilot-owner-bootstrap to prepare and verify a one-owner private pilot bootstrap."

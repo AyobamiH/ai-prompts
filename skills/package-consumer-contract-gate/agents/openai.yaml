@@ -1,0 +1,4 @@
+interface:
+  display_name: "Package Consumer Contract Gate"
+  short_description: "Verify packed artifacts in clean consumers"
+  default_prompt: "Use $package-consumer-contract-gate to verify this package's shipped consumer contract before upstream review."

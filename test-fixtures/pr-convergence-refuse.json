@@ -1,0 +1,23 @@
+{
+  "schema": "overlapping-pr-convergence.v1",
+  "default_branch": {"sha": "main", "tree_sha": "tree-main"},
+  "provider_readback": false,
+  "content_digests_verified": false,
+  "history_preserved": false,
+  "no_force_update": false,
+  "no_merge_performed": false,
+  "pull_requests": [
+    {
+      "id": "2",
+      "head_sha": "candidate",
+      "head_base_sha": "old-main",
+      "intended_change_ids": ["a", "b"],
+      "change_ids_present_in_base": ["a"],
+      "remaining_change_ids": ["a"],
+      "semantic_conflict": false,
+      "classification": "READY",
+      "requested_action": "merge_now",
+      "exact_head_ci": "stale"
+    }
+  ]
+}

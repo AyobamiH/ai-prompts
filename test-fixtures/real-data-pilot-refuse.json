@@ -1,0 +1,11 @@
+{
+  "schema": "authorized-real-data-pilot.v1",
+  "target_state": "market_evidence",
+  "dataset": {"id": "demo", "jurisdiction": "", "source_kind": "scraped", "source_ref": "", "acquired_at": "", "checksum": "latest", "provenance_ref": "", "rights_basis": "", "allowed_purpose": "", "retention_days": 0, "deletion_path": "", "classification": "", "schema_validation": "not-run", "target_market_relevance": false, "approval_ref": ""},
+  "approvals": {"rights": false, "use": false, "retention": false, "no_shared_training": false},
+  "tenant_isolation": false,
+  "data_minimized": false,
+  "shared_training_use": true,
+  "raw_records_in_manifest": true,
+  "evaluation": {"real_users": 1, "non_founder_users": 2, "completed_tasks": 2, "product_revision": "", "dataset_checksum": "other", "baseline_defined": false, "outcome_metric": "", "failures_recorded": false, "authorized_user_participation": false, "product_market_fit_claimed": true}
+}

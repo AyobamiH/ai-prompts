@@ -1,0 +1,4 @@
+interface:
+  display_name: "Distribution Channel State Reconciliation"
+  short_description: "Reconcile provider publication truth"
+  default_prompt: "Use $distribution-channel-state-reconciliation to reconcile repository, portal, public listing, install, and live-outcome states."

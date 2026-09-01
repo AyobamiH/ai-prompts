@@ -1,4 +1,4 @@
 interface:
   display_name: "Deployment Environment Secret Isolation"
   short_description: "Prevent and recover cross-environment credential writes"
-  default_prompt: "Verify exact deployment and secret targets across environments, and fail closed on ambiguity."
+  default_prompt: "Use $deployment-environment-secret-isolation to verify exact deployment, credential-step, and secret targets across environments."

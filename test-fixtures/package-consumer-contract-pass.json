@@ -1,0 +1,30 @@
+{
+  "schema": "package-consumer-contract.v1",
+  "subject": "commit:87c401a7fa0fee8e6cb50ce0dcaaec85272b3811",
+  "documented_entrypoints": ["root-modern", "legacy", "historical-issue", "component"],
+  "required_entrypoints": ["root-modern", "legacy", "historical-issue", "component"],
+  "artifacts": [
+    {"kind": "built", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": true},
+    {"kind": "packed", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": true},
+    {"kind": "installed", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": true},
+    {"kind": "release", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": true}
+  ],
+  "toolchains": [
+    {"id": "locked", "supported": true, "passed": true},
+    {"id": "minimum-supported", "supported": true, "passed": true}
+  ],
+  "minimum_supported_documented": true,
+  "clean_consumer_install": true,
+  "workspace_resolution_disabled": true,
+  "historical_issue_reproduction": true,
+  "repository_owned_test": true,
+  "remote_ci_wires_test": true,
+  "changelog_updated": true,
+  "equivalence_assertions": [
+    {"left": "root-modern", "right": "legacy", "strength": "byte-identical", "passed": true}
+  ],
+  "upstream_checks": "action_required",
+  "maintainer_approval": false,
+  "agent_merge_authority": false,
+  "contains_secret_values": false
+}

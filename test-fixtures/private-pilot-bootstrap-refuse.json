@@ -1,0 +1,16 @@
+{
+  "schema": "private-pilot-owner-bootstrap.v1",
+  "target_state": "bootstrap_verified",
+  "subject": {"repository": "AyobamiH/product", "source_sha": "main", "deployment_id": "", "environment": "production"},
+  "rollout_converged": false,
+  "auth_hardening_deployed_before_account": false,
+  "provider_readback": false,
+  "protected_environment": {"name": "", "exact_target": false, "branch_restriction": false, "approval_recorded": false},
+  "secret_refs": {"owner_email_ref": "", "password_hash_ref": "plaintext", "database_uri_ref": "", "password_hash_scheme": "plaintext"},
+  "contains_secret_values": true,
+  "workflow": {"manual_only": false, "maximum_uses": 99, "idempotent": false, "cleanup_on_failure": false, "sanitized_receipt": false},
+  "account": {"planned_owner_count": 2, "current_owner_count": 2, "workspace_count": 2, "role": "admin", "approved_scopes": ["read"], "granted_scopes": ["read", "write"], "provider_admin": true, "platform_admin": true, "separate_tester": true},
+  "tests": {"valid_sign_in": "pass", "wrong_password": "fail"},
+  "failure_cleanup_user_count": 2,
+  "execution_receipt_ref": ""
+}

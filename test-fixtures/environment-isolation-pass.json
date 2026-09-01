@@ -15,6 +15,12 @@
       "credentialSource": "github-env-production",
       "secretTarget": "service-prod",
       "preflightTargetAssertion": true,
+      "credentialSteps": ["deploy-production", "upload-production-secrets"],
+      "mutationSteps": ["deploy-production", "upload-production-secrets"],
+      "jobWideCredentials": false,
+      "checkoutReceivesProviderCredentials": false,
+      "dependencyInstallReceivesProviderCredentials": false,
+      "validationReceivesProviderCredentials": false,
       "liveProbes": ["root-200", "unsigned-webhook-401"]
     },
     {
@@ -28,6 +34,12 @@
       "credentialSource": "github-env-development",
       "secretTarget": "service-development",
       "preflightTargetAssertion": true,
+      "credentialSteps": ["deploy-development", "upload-development-secrets"],
+      "mutationSteps": ["deploy-development", "upload-development-secrets"],
+      "jobWideCredentials": false,
+      "checkoutReceivesProviderCredentials": false,
+      "dependencyInstallReceivesProviderCredentials": false,
+      "validationReceivesProviderCredentials": false,
       "liveProbes": ["root-200", "mcp-404", "unsigned-webhook-401"]
     }
   ]

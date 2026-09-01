@@ -1,0 +1,22 @@
+{
+  "schema": "deployment-revision-convergence.v1",
+  "source_sha": "8622b07",
+  "artifact_digest": "sha256:artifact-v2",
+  "deployment_id": "33485144616",
+  "environment": "staging",
+  "revision_marker": "oauth-hardened-v2",
+  "provider_deploy_state": "success",
+  "provider_readback": true,
+  "required_consecutive_matches": 3,
+  "observations": [
+    {"observed_at": "2026-09-01T10:00:00Z", "source": "direct", "status": "ready", "revision_marker": "previous"},
+    {"observed_at": "2026-09-01T10:00:05Z", "source": "direct", "status": "ready", "revision_marker": "oauth-hardened-v2"},
+    {"observed_at": "2026-09-01T10:00:10Z", "source": "independent", "status": "ready", "revision_marker": "oauth-hardened-v2"},
+    {"observed_at": "2026-09-01T10:00:15Z", "source": "direct", "status": "ready", "revision_marker": "oauth-hardened-v2"}
+  ],
+  "authenticated_probe": {"after_convergence": true, "revision_marker": "oauth-hardened-v2", "status": "pass"},
+  "retry_policy": {"maximum_retries": 1, "retries_used": 0, "reconcile_before_retry": true, "stop_after_repeat": true},
+  "diagnostics": {"sanitized": true, "remote_tool_names_only": true, "response_bodies_logged": false, "secret_values_logged": false, "old_revision_response_treated_as_new_schema": false},
+  "repeated_failure_after_retry": false,
+  "rollback": {"known_good_sha": "known-good", "deployment_id": "known-good-deployment", "provenance_verified": true, "restoration_probe": true}
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "package-consumer-contract.v1",
+  "subject": "moving-branch",
+  "documented_entrypoints": ["root-modern"],
+  "required_entrypoints": ["root-modern", "legacy"],
+  "artifacts": [
+    {"kind": "built", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": false},
+    {"kind": "packed", "passed": true, "expected_paths_verified": true, "forbidden_paths_verified": true}
+  ],
+  "toolchains": [{"id": "locked", "supported": true, "passed": true}],
+  "minimum_supported_documented": false,
+  "clean_consumer_install": false,
+  "workspace_resolution_disabled": false,
+  "historical_issue_reproduction": false,
+  "repository_owned_test": false,
+  "remote_ci_wires_test": false,
+  "changelog_updated": false,
+  "equivalence_assertions": [],
+  "upstream_checks": "fail",
+  "maintainer_approval": false,
+  "agent_merge_authority": true,
+  "contains_secret_values": false
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deployment Revision Convergence"
+  short_description: "Prove the exact revision is serving"
+  default_prompt: "Use $deployment-revision-convergence to prove the intended revision is serving before authenticated verification."

@@ -1,0 +1,16 @@
+{
+  "schema": "distribution-channel-state.v1",
+  "subject_id": "donestate:github:draft",
+  "subject": {"product": "DoneState", "channel": "GitHub Marketplace", "artifact_type": "GitHub App", "version": "draft", "source_sha": "main", "deployed_sha": "latest"},
+  "target_state": "DISCOVERABLE",
+  "provider_readback_at_execution_time": false,
+  "provider_mutations_performed": true,
+  "repository_ledger_reconciled_without_promotion": false,
+  "owner_preview_used_as_public_proof": true,
+  "public_discoverability_claimed": true,
+  "contradictions": ["provider control says pending for publish"],
+  "observations": {
+    "DRAFT": {"status": "verified", "subject_id": "donestate:github:draft", "evidence_ref": "owner-preview", "observed_at": "2026-09-01T09:00:00Z", "surface": "repository", "authenticated": true},
+    "DISCOVERABLE": {"status": "verified", "subject_id": "donestate:github:draft", "evidence_ref": "owner-preview", "observed_at": "2026-09-01T09:01:00Z", "surface": "owner_preview", "authenticated": true}
+  }
+}

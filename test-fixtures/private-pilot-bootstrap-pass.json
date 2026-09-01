@@ -1,0 +1,16 @@
+{
+  "schema": "private-pilot-owner-bootstrap.v1",
+  "target_state": "bootstrap_verified",
+  "subject": {"repository": "AyobamiH/product", "source_sha": "8622b07", "deployment_id": "33485144616", "environment": "staging"},
+  "rollout_converged": true,
+  "auth_hardening_deployed_before_account": true,
+  "provider_readback": true,
+  "protected_environment": {"name": "chatgpt-pilot-bootstrap", "exact_target": true, "branch_restriction": true, "approval_recorded": true},
+  "secret_refs": {"owner_email_ref": "env:OWNER_EMAIL", "password_hash_ref": "env:OWNER_PASSWORD_HASH", "database_uri_ref": "env:STAGING_DATABASE_URI", "password_hash_scheme": "bcrypt"},
+  "contains_secret_values": false,
+  "workflow": {"manual_only": true, "maximum_uses": 1, "idempotent": true, "cleanup_on_failure": true, "sanitized_receipt": true},
+  "account": {"planned_owner_count": 1, "current_owner_count": 1, "workspace_count": 1, "role": "owner", "approved_scopes": ["tax_lien:read"], "granted_scopes": ["tax_lien:read"], "provider_admin": false, "platform_admin": false, "separate_tester": false},
+  "tests": {"valid_sign_in": "pass", "wrong_password": "pass", "revoked_grant": "pass", "tenant_isolation": "pass", "scope_denial": "pass", "failure_cleanup": "pass"},
+  "failure_cleanup_user_count": 0,
+  "execution_receipt_ref": "receipt:pilot-owner-001"
+}

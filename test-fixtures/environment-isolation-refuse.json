@@ -15,6 +15,12 @@
       "credentialSource": "shared-secrets",
       "secretTarget": "service",
       "preflightTargetAssertion": false,
+      "credentialSteps": ["checkout", "install", "deploy"],
+      "mutationSteps": ["deploy"],
+      "jobWideCredentials": true,
+      "checkoutReceivesProviderCredentials": true,
+      "dependencyInstallReceivesProviderCredentials": true,
+      "validationReceivesProviderCredentials": true,
       "liveProbes": []
     },
     {
@@ -28,6 +34,12 @@
       "credentialSource": "shared-secrets",
       "secretTarget": "service",
       "preflightTargetAssertion": false,
+      "credentialSteps": ["checkout", "test", "deploy"],
+      "mutationSteps": ["deploy"],
+      "jobWideCredentials": true,
+      "checkoutReceivesProviderCredentials": true,
+      "dependencyInstallReceivesProviderCredentials": true,
+      "validationReceivesProviderCredentials": true,
       "liveProbes": []
     }
   ]

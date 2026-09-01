@@ -1,0 +1,20 @@
+{
+  "schema": "distribution-channel-state.v1",
+  "subject_id": "opstruth:chatgpt:0.4.0",
+  "subject": {"product": "OpsTruth", "channel": "ChatGPT app directory", "artifact_type": "connector", "version": "0.4.0", "source_sha": "source-040", "deployed_sha": "deployed-040"},
+  "target_state": "PUBLISHED",
+  "provider_readback_at_execution_time": true,
+  "provider_mutations_performed": false,
+  "repository_ledger_reconciled_without_promotion": true,
+  "owner_preview_used_as_public_proof": false,
+  "public_discoverability_claimed": false,
+  "contradictions": [],
+  "observations": {
+    "DRAFT": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "repo:release-ledger", "observed_at": "2026-09-01T08:00:00Z", "surface": "repository", "authenticated": true},
+    "DEVELOPER_MODE_VERIFIED": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "receipt:developer-mode", "observed_at": "2026-09-01T08:10:00Z", "surface": "developer_mode", "authenticated": true},
+    "SUBMITTED": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "portal:submission", "observed_at": "2026-09-01T08:20:00Z", "surface": "provider_control", "authenticated": true},
+    "IN_REVIEW": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "portal:review", "observed_at": "2026-09-01T08:30:00Z", "surface": "provider_control", "authenticated": true},
+    "APPROVED": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "portal:approval", "observed_at": "2026-09-01T08:40:00Z", "surface": "provider_control", "authenticated": true},
+    "PUBLISHED": {"status": "verified", "subject_id": "opstruth:chatgpt:0.4.0", "evidence_ref": "portal:published", "observed_at": "2026-09-01T08:50:00Z", "surface": "provider_control", "authenticated": true}
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "overlapping-pr-convergence.v1",
+  "default_branch": {"sha": "8622b07", "tree_sha": "tree-main"},
+  "provider_readback": true,
+  "content_digests_verified": true,
+  "history_preserved": true,
+  "no_force_update": true,
+  "no_merge_performed": true,
+  "pull_requests": [
+    {
+      "id": "3",
+      "head_sha": "32124a25",
+      "head_base_sha": "older-main",
+      "intended_change_ids": ["owner-bootstrap"],
+      "change_ids_present_in_base": ["owner-bootstrap"],
+      "remaining_change_ids": [],
+      "semantic_conflict": false,
+      "classification": "ALREADY_IN_BASE",
+      "requested_action": "close_without_merge",
+      "exact_head_ci": "pass"
+    },
+    {
+      "id": "2",
+      "head_sha": "1fb0aa9a",
+      "head_base_sha": "older-main",
+      "intended_change_ids": ["oauth-hardening", "owner-bootstrap"],
+      "change_ids_present_in_base": ["owner-bootstrap"],
+      "remaining_change_ids": ["oauth-hardening"],
+      "semantic_conflict": false,
+      "classification": "REMAINING_DELTA",
+      "requested_action": "rebuild_remaining_delta",
+      "exact_head_ci": "pass"
+    }
+  ]
+}
