@@ -1,0 +1,16 @@
+{
+  "schema": "oauth-handoff-design.v1",
+  "state_entropy_bits": 256,
+  "csrf_entropy_bits": 256,
+  "ttl_seconds": 600,
+  "client_bound": true,
+  "redirect_bound": true,
+  "scopes_bound": true,
+  "single_use": true,
+  "authenticated_state": true,
+  "storage_model": "sealed_transaction",
+  "plain_record_projection": true,
+  "domain_separated_key": true,
+  "records_raw_secrets": false,
+  "tests": ["valid", "expired", "tampered", "concurrent", "cookie_free", "cross_region", "provider_shaped", "single_use"]
+}

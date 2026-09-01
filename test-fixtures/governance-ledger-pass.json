@@ -1,0 +1,34 @@
+{
+  "schema": "project-governance-ledger.v1",
+  "generated_views_verified": true,
+  "governance_impact_gate": true,
+  "work": [
+    {
+      "id": "GOV-001",
+      "title": "Install durable governance",
+      "stream": "governance",
+      "status": "complete",
+      "owner": "maintainers",
+      "lastUpdated": "2026-08-30",
+      "staleDate": "2026-12-01",
+      "nextAction": "Keep generated views current",
+      "waitCondition": "None",
+      "reentryCondition": "A protected path changes",
+      "dependencies": [],
+      "evidenceIds": ["E-001"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E-001",
+      "date": "2026-08-30",
+      "subject": "commit:364cf86e",
+      "situation": "Project state drifted across chats and documents.",
+      "verification": "Generated views and governance CI passed on the exact subject.",
+      "accountability": "owner=maintainers; status=complete",
+      "outcome": "Machine ledger became canonical.",
+      "content": "Ledger, generator, CI gate, and freshness check.",
+      "measurement": "One exact-subject gate passed."
+    }
+  ]
+}

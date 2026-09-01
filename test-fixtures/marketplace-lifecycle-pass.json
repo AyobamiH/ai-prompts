@@ -1,0 +1,12 @@
+{
+  "schema": "marketplace-lifecycle.v1",
+  "raw_body_signature_required": true,
+  "marketplace_secret_isolated": true,
+  "delivery_idempotency": true,
+  "monotonic_effective_time": true,
+  "actions": ["purchased", "changed", "cancelled", "pending_change", "pending_change_cancelled"],
+  "purchase_grants_repository_authority": false,
+  "signed_ping_changes_entitlement": false,
+  "receipt_fields": ["schema", "deliveryId", "action", "duplicate", "stale", "currentState", "currentEffectiveAt"],
+  "tests": ["invalid_signature", "signed_ping_no_effect", "duplicate", "stale", "all_transitions", "cancellation"]
+}

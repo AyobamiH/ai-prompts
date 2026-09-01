@@ -1,0 +1,12 @@
+{
+  "schema": "external-reviewer-access.v1",
+  "identity_type": "owner",
+  "owner_account_reused": true,
+  "allowed_actions": ["read", "deploy"],
+  "denied_actions": [],
+  "callback_origins": ["*"],
+  "synthetic_data_only": false,
+  "contains_credentials": true,
+  "expires_at": "2020-01-01T00:00:00Z",
+  "tests": []
+}

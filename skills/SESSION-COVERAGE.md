@@ -4,7 +4,9 @@ Snapshot source: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc
 
 Initial snapshot endpoint: fresh OAuth consent page ready, with consent, GitHub scopes, and icon upload awaiting owner confirmation.
 
-Continuation endpoint: GitHub App `donestate-maintenance-ayobamih` (App ID `4761698`) installed as installation `157513439` only on `AyobamiH/donestate`; a PR-only docs canary produced PR #22 at commit `ffec48e6...`, passed 22/22 tests and CI, and was not merged. Independent verification remained `uncertain`, so the gate stayed awaiting verification. The GitHub Marketplace agreement was accepted and `DONE_STATE_GITHUB_MARKETPLACE_WEBHOOK_SECRET` was stored, but the provider webhook update had not yet been confirmed; review submission and publication remained excluded.
+First continuation endpoint: GitHub App `donestate-maintenance-ayobamih` (App ID `4761698`) installed as installation `157513439` only on `AyobamiH/donestate`; a PR-only docs canary produced PR #22 at commit `ffec48e6...`, passed 22/22 tests and CI, and was not merged. Independent verification remained `uncertain`, so the gate stayed awaiting verification.
+
+Later continuation evidence: public DoneState PRs #28-#56 recorded concurrent and cross-browser OAuth repair, strongly consistent and sealed transaction state, bounded reviewer access, OpenAI review submission, owned-domain cutover, signed Marketplace lifecycle ingestion, binding trust pages, a machine-readable governance ledger, lifecycle hardening, development/production isolation, recovery from a mis-targeted secret upload, and privacy-minimal lifecycle receipts. These implementation, CI, deployment, live-delivery, review, approval, and publication states remain separate; this coverage record extracts reusable methods rather than claiming provider approval.
 
 ## Coverage map
 
@@ -20,6 +22,18 @@ Continuation endpoint: GitHub App `donestate-maintenance-ayobamih` (App ID `4761
 | Group unavoidable account actions into one precise owner checkpoint | New: `owner-only-provider-checkpoint` |
 | Prepare a GitHub App Marketplace listing while separating agreement, webhook, legal-owner, review, approval, and publication states | New: `github-app-marketplace-readiness` |
 | Synchronize a Marketplace webhook secret without recording its value and require signed-delivery readback | Included in `github-app-marketplace-readiness`; the observed session stopped before provider update confirmation |
+| Recover OAuth failures across concurrent attempts, cookie-free browser handoff, cross-region read-after-write, and provider-object portability, then select strongly consistent or sealed state without removing CSRF | Expanded: `oauth-state-recovery`; the earlier package recorded the symptom but missed the actual failure-driven recovery ladder |
+| Make tamper, expiry, concurrency, cookie-loss, cross-region, provider-shaped, and single-use OAuth tests deterministic | Included in the expanded `oauth-state-recovery` package and helper |
+| Give an external reviewer a dedicated application identity with representative reads and explicit denial of write, execute, approve, merge, deploy, administer, and secret access | New: `external-reviewer-access-boundary` |
+| Allowlist the exact reviewer callback/form origin while preserving the rest of the CSP and accurately disclose internal state writes in tool annotations | Included in `external-reviewer-access-boundary`; directory metadata remains covered by `chatgpt-app-directory-readiness` |
+| Process signed Marketplace purchase, change, cancellation, pending-change, and pending-change-cancelled events monotonically and idempotently | New: `marketplace-lifecycle-entitlements` |
+| Accept a signed Marketplace ping without granting an entitlement, keep billing separate from repository authority, and return a versioned privacy-minimal delivery receipt | Included in `marketplace-lifecycle-entitlements` |
+| Make one machine-readable project ledger canonical, generate human status views, reject governance drift in CI, and report stale owners through a read-only scheduled check | New: `self-documenting-project-governance` |
+| Preserve evidence stories as situation, verification, accountability, outcome, content, and measurement with explicit re-entry conditions for deferred work | Included in `self-documenting-project-governance` |
+| Separate production and development services, configs, endpoints, credential sources, secret targets, deploy triggers, OAuth apps, and Marketplace listings | New: `deployment-environment-secret-isolation` |
+| Treat a generic secret uploader resolving the wrong Worker as an incident, restore both environments independently, verify both with direct probes, and remove temporary recovery triggers | Included in `deployment-environment-secret-isolation` |
+| Cut over to an owned service domain while preserving the legacy review transport and exact deployment evidence | Reused: `exact-commit-release-promotion`, `cloudflare-mcp-plugin-platform`, and `documentation-closure-gate` |
+| Publish binding privacy and service terms and keep review submission distinct from approval and public listing | Reused: `public-app-trust-pages`, `chatgpt-app-directory-readiness`, and `github-app-marketplace-readiness` |
 | Exercise one selected-repository PR-only maintenance canary and stop on an `uncertain` independent-verifier result | Reused: `autonomous-repository-maintenance` and `independent-execution-verification`; no duplicate canary skill created |
 | Resume bounded repository work from durable state | Reused: `agent/autonomous-coding-workflow` |
 | Classify missing connector, runtime, configuration, and approval capabilities | Reused: `agent/capability-gap-learning-system` |

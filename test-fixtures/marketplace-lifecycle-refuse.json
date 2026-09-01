@@ -1,0 +1,12 @@
+{
+  "schema": "marketplace-lifecycle.v1",
+  "raw_body_signature_required": false,
+  "marketplace_secret_isolated": false,
+  "delivery_idempotency": false,
+  "monotonic_effective_time": false,
+  "actions": ["purchased"],
+  "purchase_grants_repository_authority": true,
+  "signed_ping_changes_entitlement": true,
+  "receipt_fields": ["schema", "accountId", "planName", "secret"],
+  "tests": []
+}

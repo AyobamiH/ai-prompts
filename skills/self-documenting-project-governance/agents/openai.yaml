@@ -1,0 +1,4 @@
+interface:
+  display_name: "Self-Documenting Project Governance"
+  short_description: "Keep project state durable and CI-enforced"
+  default_prompt: "Create or audit a machine-readable project ledger, generated status views, and governance-drift CI gate."

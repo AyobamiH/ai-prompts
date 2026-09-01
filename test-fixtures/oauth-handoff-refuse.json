@@ -1,0 +1,14 @@
+{
+  "schema": "oauth-handoff-design.v1",
+  "state_entropy_bits": 64,
+  "csrf_entropy_bits": 64,
+  "ttl_seconds": 3600,
+  "client_bound": false,
+  "redirect_bound": false,
+  "scopes_bound": false,
+  "single_use": false,
+  "authenticated_state": false,
+  "storage_model": "eventually_consistent",
+  "records_raw_secrets": true,
+  "tests": ["valid"]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "environment-isolation.v1",
+  "mutation_requires_explicit_environment": true,
+  "independent_post_deploy_probes": true,
+  "contains_secret_values": false,
+  "environments": [
+    {
+      "name": "production",
+      "providerAccount": "account-prod",
+      "service": "service-prod",
+      "config": "wrangler.toml",
+      "endpoint": "https://service.example.com",
+      "deployWorkflow": "deploy-production",
+      "deployTrigger": "main",
+      "credentialSource": "github-env-production",
+      "secretTarget": "service-prod",
+      "preflightTargetAssertion": true,
+      "liveProbes": ["root-200", "unsigned-webhook-401"]
+    },
+    {
+      "name": "development",
+      "providerAccount": "account-dev",
+      "service": "service-development",
+      "config": "wrangler.development.toml",
+      "endpoint": "https://service-development.example.com",
+      "deployWorkflow": "deploy-development",
+      "deployTrigger": "workflow_dispatch",
+      "credentialSource": "github-env-development",
+      "secretTarget": "service-development",
+      "preflightTargetAssertion": true,
+      "liveProbes": ["root-200", "mcp-404", "unsigned-webhook-401"]
+    }
+  ]
+}

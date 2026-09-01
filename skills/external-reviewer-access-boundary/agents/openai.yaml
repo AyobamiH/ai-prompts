@@ -1,0 +1,4 @@
+interface:
+  display_name: "External Reviewer Access Boundary"
+  short_description: "Prepare and verify least-authority reviewer access"
+  default_prompt: "Prepare a bounded external reviewer identity and prove both permitted reads and denied consequential actions."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marketplace Lifecycle Entitlements"
+  short_description: "Verify signed, monotonic marketplace entitlements"
+  default_prompt: "Implement or audit marketplace lifecycle handling without turning billing state into product authority."

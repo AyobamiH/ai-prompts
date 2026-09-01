@@ -1,0 +1,34 @@
+{
+  "schema": "environment-isolation.v1",
+  "mutation_requires_explicit_environment": false,
+  "independent_post_deploy_probes": false,
+  "contains_secret_values": true,
+  "environments": [
+    {
+      "name": "production",
+      "providerAccount": "shared",
+      "service": "service",
+      "config": "wrangler.toml",
+      "endpoint": "https://service.example.com",
+      "deployWorkflow": "deploy",
+      "deployTrigger": "push",
+      "credentialSource": "shared-secrets",
+      "secretTarget": "service",
+      "preflightTargetAssertion": false,
+      "liveProbes": []
+    },
+    {
+      "name": "development",
+      "providerAccount": "shared",
+      "service": "service",
+      "config": "wrangler.toml",
+      "endpoint": "https://service.example.com",
+      "deployWorkflow": "deploy",
+      "deployTrigger": "push",
+      "credentialSource": "shared-secrets",
+      "secretTarget": "service",
+      "preflightTargetAssertion": false,
+      "liveProbes": []
+    }
+  ]
+}

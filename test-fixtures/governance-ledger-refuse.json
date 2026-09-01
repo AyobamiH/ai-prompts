@@ -1,0 +1,10 @@
+{
+  "schema": "project-governance-ledger.v1",
+  "generated_views_verified": false,
+  "governance_impact_gate": false,
+  "work": [
+    {"id": "GOV-001", "status": "complete", "evidenceIds": [], "api_key": "exposed"},
+    {"id": "GOV-001", "status": "complete", "evidenceIds": ["E-MISSING"]}
+  ],
+  "evidence": []
+}

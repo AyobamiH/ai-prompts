@@ -1,0 +1,13 @@
+{
+  "schema": "external-reviewer-access.v1",
+  "identity_type": "dedicated_application_reviewer",
+  "owner_account_reused": false,
+  "allowed_actions": ["read"],
+  "denied_actions": ["write", "execute", "approve", "merge", "deploy", "administer", "read_secrets"],
+  "callback_origins": ["https://platform.openai.com"],
+  "synthetic_data_only": true,
+  "contains_credentials": false,
+  "expires_at": "2099-01-01T00:00:00Z",
+  "revocation_path": "/admin/reviewers/revoke",
+  "tests": ["authenticated_read", "write_refused", "execute_refused", "admin_refused", "revocation"]
+}
