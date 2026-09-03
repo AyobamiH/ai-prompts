@@ -1,0 +1,4 @@
+interface:
+  display_name: "Immutable Successor Canary Recovery"
+  short_description: "Repair forward with fresh production canaries"
+  default_prompt: "Verify that predecessor canaries remain immutable and a fresh successor proves the repaired path end to end."

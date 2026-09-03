@@ -1,12 +1,10 @@
-# ChatGPT App Rollout and Recovery Skills
+# Rollout, Recovery and Autonomous Execution Skills
 
-This collection packages the new reusable methods exercised across the shared "Completion status summary" snapshot and its continuing "Continue GitHub Setup" work session. The initial snapshot ended at a fresh owner OAuth consent checkpoint; the continuation advanced through OAuth handoff repair, external review access, selected-repository maintenance, GitHub Marketplace lifecycle handling, self-documenting governance, and isolated development deployment recovery.
+This collection packages reusable methods mined from production engineering sessions spanning ChatGPT app rollout, marketplace and OAuth recovery, Proof & State governance, real-data pilot gates, and DoneState autonomous-maintenance canaries. The newest expansion captures the production reliability ladder exercised through signed webhook dispatch, ephemeral Cloudflare Sandbox execution, durable terminal receipts, resumable alarms, exact-head CI, OpsTruth verification, and immutable successor canaries.
 
-The collection was expanded from the ongoing "Verify report Steps", "Verify remaining gates", and "OpenAI submission status" chats. That review added shipped-package consumer contracts, overlapping-PR reconciliation, deployment revision convergence, private-pilot owner bootstrap, authorized real-data evaluation, and a distribution-channel state chain without copying platform capabilities or skills already packaged on other branches.
+The collection is intentionally deduplicated: provider tools and platform capabilities are not copied as skills, and earlier skill contracts are reused when the session did not add a new decision boundary.
 
-Source session: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc>
-
-## New skills
+## Skills
 
 | Skill | Capability captured |
 | --- | --- |
@@ -29,10 +27,19 @@ Source session: <https://chatgpt.com/share/6a92a4f9-35f0-83eb-8386-5233769b71dc>
 | [private-pilot-owner-bootstrap](private-pilot-owner-bootstrap/SKILL.md) | Bootstrap exactly one protected product-local owner after hardened authentication converges |
 | [authorized-real-data-pilot](authorized-real-data-pilot/SKILL.md) | Gate lawful, relevant real data and bounded real-user evidence without claiming product-market fit |
 | [distribution-channel-state-reconciliation](distribution-channel-state-reconciliation/SKILL.md) | Reconcile draft, review, publication, discoverability, installation, and live-outcome states |
+| [durable-webhook-queue-handoff](durable-webhook-queue-handoff/SKILL.md) | Bind authenticated webhook acceptance to one durable atomic queue claim without waiting for asynchronous execution |
+| [ephemeral-runtime-read-retry](ephemeral-runtime-read-retry/SKILL.md) | Retry idempotent credential-free reads in fresh runtimes while keeping mutating effects non-retriable |
+| [bounded-production-observability-reconciliation](bounded-production-observability-reconciliation/SKILL.md) | Localize one production progression boundary with exact subjects, windows, raw needles, and a frozen evidence boundary |
+| [managed-runtime-one-variable-recovery](managed-runtime-one-variable-recovery/SKILL.md) | Diagnose managed runtime failures with a frozen workload and one variable changed per fresh production canary |
+| [single-launch-terminal-receipt-reconciliation](single-launch-terminal-receipt-reconciliation/SKILL.md) | Persist intent before exactly one long implementation launch and use an atomic subject-bound terminal receipt as the sole completion oracle |
+| [alarm-sliced-resumable-execution](alarm-sliced-resumable-execution/SKILL.md) | Reconcile one long implementation across bounded serverless alarm slices without relaunching it |
+| [post-receipt-runtime-quiescence](post-receipt-runtime-quiescence/SKILL.md) | Separate implementation completion from runtime channel readiness with a fixed post-receipt quiescence gate |
+| [immutable-successor-canary-recovery](immutable-successor-canary-recovery/SKILL.md) | Preserve failed and ambiguous runs immutably, repair the proven layer, then prove it with one fresh successor canary |
+| [verified-run-branch-retirement](verified-run-branch-retirement/SKILL.md) | Delete only exact independently verified, merged autonomous run branches while preserving historical evidence |
 
 ## Deterministic helpers
 
-Seventeen standard-library Python helpers validate:
+26 standard-library Python helpers validate:
 
 - Task completion against required exact-subject evidence
 - App-directory readiness gates against one release subject
@@ -51,7 +58,16 @@ Seventeen standard-library Python helpers validate:
 - Protected single-use owner bootstrap, product-local authority, exact scopes, refusal tests, cleanup, and sanitized receipts
 - Real-dataset provenance, rights, purpose, retention, deletion, isolation, user authority, outcome measurement, and bounded evidence thresholds
 - Immutable distribution subjects across provider control, public directory, clean installation, and runtime outcome surfaces
+- Webhook authentication, deduplication, atomic queue claims, awaited durable setup, duplicate convergence, and periodic reconciliation
+- Fresh-runtime retries for credential-free idempotent reads with bounded attempts, backoff, and mutation-retry refusal
+- Single-subject production observability windows, ordered progression stages, raw needles, redaction, and frozen non-mutating evidence boundaries
+- Frozen-workload one-variable runtime experiments with compatibility alignment, exact deployments, and distinct successor canaries
+- Intent-before-effect, one implementation launch, atomic terminal receipt binding, and ambiguous-effect refusal on missing receipt
+- Durable resumable checkpoints, one read-only reconciliation slice per alarm, safe rescheduling, and no relaunch on resume
+- Fixed post-receipt quiescence, interval regression pinning, and separate capability classification for runtime-close validation failures
+- Immutable predecessor canaries, separately merged/deployed repairs, fresh successor identities, and full independent-verification proof chains
+- Exact verified+merged run-branch retirement with sealed subject reconciliation and preservation of non-verified history
 
-The helpers do not replace live provider readback, cryptographic checks, legal review, OAuth consent, directory attestations, or publication approval.
+The helpers do not replace live provider readback, cryptographic checks, legal review, OAuth consent, directory attestations, runtime telemetry, or independent verification.
 
-See [SESSION-COVERAGE.md](SESSION-COVERAGE.md) for the complete deduplication record, including methods already packaged on earlier branches.
+See [SESSION-COVERAGE.md](SESSION-COVERAGE.md) for the earlier rollout deduplication record and [DONESTATE-PRODUCTION-CANARY-COVERAGE.md](DONESTATE-PRODUCTION-CANARY-COVERAGE.md) for the 2026-09-03 production-canary expansion.

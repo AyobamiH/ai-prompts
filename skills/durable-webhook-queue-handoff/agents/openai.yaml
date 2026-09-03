@@ -1,0 +1,4 @@
+interface:
+  display_name: "Durable Webhook Queue Handoff"
+  short_description: "Await durable queue intent before webhook acceptance"
+  default_prompt: "Verify that authenticated webhook acceptance is bound to one durable queue claim without waiting for execution."

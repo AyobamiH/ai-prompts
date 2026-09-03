@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ephemeral Runtime Read Retry"
+  short_description: "Retry safe reads in fresh runtimes"
+  default_prompt: "Verify bounded credential-free retries for an idempotent read across fresh ephemeral runtimes."

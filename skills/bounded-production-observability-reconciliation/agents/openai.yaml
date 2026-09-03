@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bounded Production Observability"
+  short_description: "Localize one production boundary before repair"
+  default_prompt: "Check that production telemetry reconciliation is bound to one subject, deployment, window, and ordered progression path."

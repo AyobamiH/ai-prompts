@@ -1,0 +1,4 @@
+interface:
+  display_name: "Single-Launch Terminal Receipt"
+  short_description: "Reconcile one long implementation without blind relaunch"
+  default_prompt: "Verify intent-before-effect, exactly one launch, and a durable terminal receipt as the sole completion oracle."

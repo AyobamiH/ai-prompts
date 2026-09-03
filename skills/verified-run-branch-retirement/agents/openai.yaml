@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verified Run Branch Retirement"
+  short_description: "Delete only exact verified merged run branches"
+  default_prompt: "Verify narrow autonomous branch retirement against the sealed run and merged pull request."

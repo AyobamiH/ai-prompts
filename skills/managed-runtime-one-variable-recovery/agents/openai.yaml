@@ -1,0 +1,4 @@
+interface:
+  display_name: "Managed Runtime One-Variable Recovery"
+  short_description: "Diagnose runtime failures one variable at a time"
+  default_prompt: "Check a production canary ladder for one-variable managed-runtime experiments with a frozen workload."

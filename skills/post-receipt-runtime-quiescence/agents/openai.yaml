@@ -1,0 +1,4 @@
+interface:
+  display_name: "Post-Receipt Runtime Quiescence"
+  short_description: "Delay validation until the runtime channel settles"
+  default_prompt: "Verify a bounded fixed quiescence gate between terminal implementation receipt and the next managed-runtime validation command."

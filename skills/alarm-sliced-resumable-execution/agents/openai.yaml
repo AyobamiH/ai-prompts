@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alarm-Sliced Resumable Execution"
+  short_description: "Resume long work across short coordinator invocations"
+  default_prompt: "Check that long implementation work is single-launch, checkpointed, and reconciled in bounded read-only alarm slices."
