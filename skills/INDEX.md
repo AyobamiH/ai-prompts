@@ -2,7 +2,7 @@
 
 This collection packages reusable methods mined from production engineering sessions spanning ChatGPT app rollout, marketplace and OAuth recovery, Proof & State governance, real-data pilot gates, and DoneState autonomous-maintenance canaries. The newest expansion captures the production reliability ladder exercised through signed webhook dispatch, ephemeral Cloudflare Sandbox execution, durable terminal receipts, resumable alarms, exact-head CI, OpsTruth verification, and immutable successor canaries.
 
-The collection is intentionally deduplicated: provider tools and platform capabilities are not copied as skills, and earlier skill contracts are reused when the session did not add a new decision boundary.
+The collection is intentionally deduplicated: provider tools and platform capabilities are not copied as skills, and earlier skill contracts are reused when the session did not add a new decision boundary. The 2026-09-04 expansion adds submission-safe DOCX provenance scrubbing for CVs and other job-application documents.
 
 ## Skills
 
@@ -36,10 +36,11 @@ The collection is intentionally deduplicated: provider tools and platform capabi
 | [post-receipt-runtime-quiescence](post-receipt-runtime-quiescence/SKILL.md) | Separate implementation completion from runtime channel readiness with a fixed post-receipt quiescence gate |
 | [immutable-successor-canary-recovery](immutable-successor-canary-recovery/SKILL.md) | Preserve failed and ambiguous runs immutably, repair the proven layer, then prove it with one fresh successor canary |
 | [verified-run-branch-retirement](verified-run-branch-retirement/SKILL.md) | Delete only exact independently verified, merged autonomous run branches while preserving historical evidence |
+| [job-application-metadata-scrub](job-application-metadata-scrub/SKILL.md) | Remove hidden DOCX authoring provenance from job applications while preserving visible content and refusing unresolved review artifacts |
 
 ## Deterministic helpers
 
-26 standard-library Python helpers validate:
+27 standard-library Python helpers validate:
 
 - Task completion against required exact-subject evidence
 - App-directory readiness gates against one release subject
@@ -67,7 +68,8 @@ The collection is intentionally deduplicated: provider tools and platform capabi
 - Fixed post-receipt quiescence, interval regression pinning, and separate capability classification for runtime-close validation failures
 - Immutable predecessor canaries, separately merged/deployed repairs, fresh successor identities, and full independent-verification proof chains
 - Exact verified+merged run-branch retirement with sealed subject reconciliation and preservation of non-verified history
+- Job-application DOCX properties, generator markers, review artifacts, revision identifiers, timestamps, content invariants, and render-safe output
 
 The helpers do not replace live provider readback, cryptographic checks, legal review, OAuth consent, directory attestations, runtime telemetry, or independent verification.
 
-See [SESSION-COVERAGE.md](SESSION-COVERAGE.md) for the earlier rollout deduplication record and [DONESTATE-PRODUCTION-CANARY-COVERAGE.md](DONESTATE-PRODUCTION-CANARY-COVERAGE.md) for the 2026-09-03 production-canary expansion.
+See [SESSION-COVERAGE.md](SESSION-COVERAGE.md) for the earlier rollout deduplication record and [DONESTATE-PRODUCTION-CANARY-COVERAGE.md](DONESTATE-PRODUCTION-CANARY-COVERAGE.md) for the 2026-09-03 production-canary expansion. See [CV-APPLICATION-METADATA-COVERAGE.md](CV-APPLICATION-METADATA-COVERAGE.md) for the 2026-09-04 CV metadata scrub evidence.

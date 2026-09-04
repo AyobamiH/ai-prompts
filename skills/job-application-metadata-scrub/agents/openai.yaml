@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Application Metadata Scrub"
+  short_description: "Clean hidden provenance from application DOCX files"
+  default_prompt: "Use $job-application-metadata-scrub to create a submission-safe copy of this DOCX, preserve visible content, and verify the cleaned package."
